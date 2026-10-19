@@ -1,10 +1,9 @@
 cff-version: 1.2.0
-message: "Please cite the version and note that this is a conceptual public draft."
-title: "Gobernar la IA. Proteger sus sistemas."
+message: "Cite these as a research guide and good-practice manual, working version v0.2."
+title: "Guía de investigación y manual de buenas prácticas de IA"
 authors:
   - family-names: Martínez
     given-names: Ricardo
-version: 0.1
+version: 0.2
 date-released: 2026-10-19
 url: "https://github.com/nullghost-io/ai-governance-evidence"
-type: report

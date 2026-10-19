@@ -1,16 +1,16 @@
-# De la intención a la evidencia.
+# Manual de buenas prácticas de IA
 
-Guía de trabajo para aplicar la ruta de gestión y seguridad de IA en NullGhost.
+Prácticas de gestión, protección y evidencia para trabajar con IA en NullGhost.
 
-> v0.1 · Borrador público · 19 de octubre de 2026
+> v0.2 · Versión de trabajo · 19 de octubre de 2026
 
-Plantillas, responsables y criterios de salida. Complemento del paper Gobernar la IA. Proteger sus sistemas. Borrador v0.1.
+Inventario, riesgos, pruebas, responsables y revisión antes de publicar. Incluye plantillas editables y criterios de salida. Versión de trabajo v0.2.
 
 ## 01 · Empezar por un sistema
 
 > **OBJETIVO.** Construir un expediente que permita revisar decisiones y resultados. No completar una lista para aparentar cumplimiento.
 
-Esta guía traduce una propuesta de NullGhost en actividades concretas. Toma como referencias de alcance ISO/IEC 42001:2023 para la gestión de IA [1] e ISO/IEC 27090:2026 para amenazas contra sistemas de IA [2]. No reemplaza las normas ni demuestra que sus requisitos estén satisfechos.
+Este manual organiza prácticas propuestas por NullGhost. Sus referencias de alcance son ISO/IEC 42001:2023, gestión de IA [1], e ISO/IEC 27090:2026, amenazas contra sistemas de IA [2]. No reemplaza las normas ni acredita conformidad.
 
 ### Antes de ejecutar
 
@@ -26,7 +26,7 @@ Esta guía traduce una propuesta de NullGhost en actividades concretas. Toma com
 | Revisor de evidencia | Contrastar el efecto observado con la afirmación. |
 | Responsable de publicación | Verificar versión, procedencia, datos excluidos y autorización de difusión. |
 
-Una persona puede desempeñar más de un rol en un equipo pequeño; debe declararse el conflicto. Una autoevaluación no debe presentarse como una revisión independiente.
+Si una persona asume varios roles, declara el conflicto. Una autoevaluación no equivale a revisión independiente.
 
 ## 02 · Ficha de inventario
 
@@ -116,7 +116,7 @@ Completar templates/pruebas.csv. El revisor debe poder comprobar el efecto sin d
 
 El manifiesto permite detectar alteraciones respecto a la versión sellada. No acredita que el contenido sea verdadero, que el reloj fuera correcto o que existiera autorización. Esas condiciones requieren registros y revisión adicionales.
 
-> **SEPARAR DIFUSIÓN Y CONSERVACIÓN.** Un expediente privado puede contener detalles que no deben entrar en el paper público. La autorización para probar un sistema no se convierte automáticamente en permiso para divulgar su identidad o sus datos.
+> **SEPARAR DIFUSIÓN Y CONSERVACIÓN.** Un expediente privado puede contener detalles que no deben entrar en el documento público. La autorización para probar un sistema no se convierte automáticamente en permiso para divulgar su identidad o sus datos.
 
 ## 06 · Plan de trabajo en cuatro etapas
 
@@ -153,7 +153,7 @@ Detener herramientas y servicios temporales, cerrar pestañas del laboratorio y 
 
 > **CRITERIO FINAL.** El lector puede reconstruir qué se autorizó, qué se hizo y qué cambió. Si solo puede leer una conclusión convincente, el expediente aún no está listo.
 
-Esta guía es un punto de partida para desarrollar prácticas verificables. La validación del protocolo y la revisión completa de las normas son trabajo pendiente de una versión posterior.
+Este manual es un punto de partida para desarrollar prácticas verificables. La validación del protocolo y la revisión completa de las normas son trabajo pendiente de una versión posterior.
 
 ## 08 · Fuentes, plantillas y siguientes versiones
 
@@ -164,9 +164,9 @@ Esta guía es un punto de partida para desarrollar prácticas verificables. La v
 
 ### Material editable
 
-El repositorio incluye contenido de los documentos, el generador PDF y plantillas CSV. Los ejemplos son sintéticos. No contiene las normas ISO ni información de clientes. Los documentos se publican como borradores v0.1 para revisión.
+El repositorio incluye contenido de los documentos, el generador PDF y plantillas CSV. Los ejemplos son sintéticos. No contiene las normas ISO ni información de clientes. Los documentos se publican como documentos de trabajo v0.2 para revisión.
 
-Repositorio: github.com/nullghost-io/ai-governance-evidence. Documento compañero: Gobernar la IA. Proteger sus sistemas. La documentación pública de NIST AI RMF [4] es contexto complementario; no se ha completado un cruce normativo.
+Repositorio: github.com/nullghost-io/ai-governance-evidence. Documento complementario: Guía de investigación en gestión y seguridad de IA. La documentación pública de NIST AI RMF [4] es contexto complementario; no se ha completado un cruce normativo.
 
 > **PRÓXIMA VERSIÓN.** Revisión humana del contenido, contraste con textos completos y ejecución del protocolo sintético. Solo después se incorporarán resultados y un mapeo defendible.
 

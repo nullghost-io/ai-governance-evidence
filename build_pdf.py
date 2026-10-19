@@ -8,12 +8,14 @@ from reportlab.lib.styles import ParagraphStyle
 from reportlab.platypus import Paragraph, Table, TableStyle
 from reportlab.pdfbase import pdfmetrics
 from reportlab.pdfbase.ttfonts import TTFont
-from content import PAPER, GUIDE, SOURCES
+from content import RESEARCH_GUIDE, MANUAL, SOURCES
+from svglib.svglib import svg2rlg
+from reportlab.graphics import renderPDF
 import math,sys
 ROOT=Path(__file__).resolve().parent
-OUT=ROOT/'paper/es';OUT.mkdir(parents=True,exist_ok=True)
+BRAND=ROOT/'assets/brand'
 W,H=595.276,841.89;M=48;CW=W-2*M
-NAVY=HexColor('#081322');INK=HexColor('#12243A');BLUE=HexColor('#0066DA');CYAN=HexColor('#65BCFF');MUTED=HexColor('#52667D');LINE=HexColor('#DCE5EF');PAPERBG=HexColor('#FAFCFF')
+NAVY=HexColor('#090D14');INK=HexColor('#12294D');BLUE=HexColor('#1557A6');CYAN=HexColor('#64A3FF');MUTED=HexColor('#52667D');LINE=HexColor('#DCE5EF');PAPERBG=HexColor('#FFFFFF')
 font_root=Path('/System/Library/Fonts/Supplemental')
 if (font_root/'Arial.ttf').exists():
  for n,f in [('Body','Arial.ttf'),('Strong','Arial Bold.ttf'),('Italic','Arial Italic.ttf')]:pdfmetrics.registerFont(TTFont(n,str(font_root/f)))
@@ -32,43 +34,48 @@ styles={
 def para(c,text,x,y,width=CW,style='body'):
  p=Paragraph(escape(text).replace('\n','<br/>'),styles[style]);_,h=p.wrap(width,1000);p.drawOn(c,x,y-h);return y-h
 
+def brand_asset(c,filename,x,y,width):
+ drawing=svg2rlg(str(BRAND/filename))
+ factor=width/drawing.width
+ c.saveState();c.translate(x,y);c.scale(factor,factor);renderPDF.draw(drawing,c,0,0);c.restoreState()
+
 def wordmark(c,x,y,color=INK):
- c.setFillColor(color)
- # Small original geometric ghost mark accompanying the NullGhost wordmark.
- p=c.beginPath();p.moveTo(x,y-1);p.lineTo(x,y+7);p.curveTo(x,y+20,x+24,y+20,x+24,y+7);p.lineTo(x+24,y-1);p.lineTo(x+18,y+2);p.lineTo(x+12,y-1);p.lineTo(x+6,y+2);p.close();c.drawPath(p,fill=1,stroke=0)
- c.setFillColor(NAVY if color==white else white);c.circle(x+8,y+8,2,fill=1,stroke=0);c.circle(x+16,y+8,2,fill=1,stroke=0)
- c.setFillColor(color);c.setFont('Strong',16);c.drawString(x+32,y,'nullghost')
+ # Use the exact approved vector asset. Never redraw the symbol or typeset the logo.
+ name='nullghost-horizontal-reverse.svg' if color==white else 'nullghost-horizontal-light.svg'
+ brand_asset(c,name,x,y-7,160)
 
 def cover(c,d,total):
  c.setFillColor(NAVY);c.rect(0,0,W,H,fill=1,stroke=0)
- c.setStrokeColor(HexColor('#102D4C'))
- for r in (115,165,215,265):c.circle(W-18,250,r,fill=0,stroke=1)
- c.setStrokeColor(BLUE);c.setLineWidth(1.5);c.circle(W-18,250,165,stroke=1,fill=0)
- c.setFillColor(CYAN);c.circle(W-18-165,250,4,fill=1,stroke=0)
  wordmark(c,M,H-70,white)
- c.setFillColor(CYAN);c.setFont('Strong',9);c.drawString(M,H-126,d['kind'])
- y=H-174
- c.setFillColor(white);c.setFont('Strong',43)
- for line in d['title'].split('\n'):c.drawString(M,y,line);y-=48
- y-=15;y=para(c,d['subtitle'],M,y,CW-30,'white')
- y-=28;c.setStrokeColor(HexColor('#2E4660'));c.line(M,y,W-M,y)
+ c.setFillColor(CYAN);c.setFont('Strong',10);c.drawString(M,H-132,d['kind'])
+ y=H-188
+ c.setFillColor(white);c.setFont('Strong',38)
+ for line in d['title'].split('\n'):c.drawString(M,y,line);y-=45
+ y-=14;y=para(c,d['subtitle'],M,y,CW-25,'white')
+ y-=24;c.setStrokeColor(HexColor('#26384C'));c.line(M,y,W-M,y)
  y-=22
- c.setFillColor(CYAN);c.setFont('Strong',10);c.drawString(M,y,'ISO/IEC 42001:2023  +  ISO/IEC 27090:2026')
- para(c,d['cover_note'],M,y-24,CW-70,'white')
- c.setFillColor(HexColor('#A4BDD6'));c.setFont('Body',10);c.drawString(M,92,'Ricardo Martínez · NullGhost Research')
- c.setFont('Body',9);c.drawString(M,72,'19 OCT 2026   /   v0.1 · BORRADOR PÚBLICO')
- c.setFillColor(CYAN);c.drawRightString(W-M,72,f'{total:02d} PÁGINAS')
+ c.setFillColor(CYAN);c.setFont('Strong',9);c.drawString(M,y,'ISO/IEC 42001:2023  +  ISO/IEC 27090:2026')
+ para(c,d['cover_note'],M,y-24,CW-10,'white')
+ brand_asset(c,'nullghost-symbol-reverse.svg',W-235,144,190)
+ c.setFillColor(CYAN);c.setFont('Strong',9);c.drawString(M,273,'UNA RUTA DE TRABAJO')
+ c.setFillColor(HexColor('#C3D8EE'));c.setFont('Body',11)
+ labels=['Definir el alcance','Investigar con fuentes','Conservar y revisar evidencia'] if d is RESEARCH_GUIDE else ['Asignar responsables','Aplicar prácticas verificables','Revisar antes de publicar']
+ for i,line in enumerate(labels):c.drawString(M,249-i*23,f'{i+1:02d}  '+line)
+ c.setStrokeColor(HexColor('#26384C'));c.line(M,117,W-M,117)
+ c.setFillColor(HexColor('#A5B6C9'));c.setFont('Body',10);c.drawString(M,91,'Ricardo Martínez · NullGhost')
+ c.setFont('Body',9);c.drawString(M,70,'19 OCT 2026   /   v0.2 · VERSIÓN DE TRABAJO')
+ c.setFillColor(CYAN);c.drawRightString(W-M,70,f'{total:02d} PÁGINAS')
  c.bookmarkPage('cover');c.addOutlineEntry('Portada','cover');c.showPage()
 
 def chrome(c,d,n,total,num,title):
  c.setFillColor(PAPERBG);c.rect(0,0,W,H,fill=1,stroke=0)
  c.setFillColor(BLUE);c.rect(0,H-6,W,6,fill=1,stroke=0)
  wordmark(c,M,H-52)
- c.setFillColor(MUTED);c.setFont('Body',8);c.drawRightString(W-M,H-46,'RESEARCH / IA   ·   v0.1')
+ c.setFillColor(MUTED);c.setFont('Body',8);c.drawRightString(W-M,H-46,('GUÍA DE INVESTIGACIÓN' if d is RESEARCH_GUIDE else 'BUENAS PRÁCTICAS')+'   ·   v0.2')
  c.setStrokeColor(LINE);c.line(M,47,W-M,47)
- c.setFillColor(MUTED);c.setFont('Body',8);c.drawString(M,31,'Propuesta de NullGhost · Sin conformidad demostrada')
+ c.setFillColor(MUTED);c.setFont('Body',8);c.drawString(M,31,'NullGhost · '+('Guía de investigación' if d is RESEARCH_GUIDE else 'Manual de buenas prácticas'))
  c.setFont('Strong',9);c.drawRightString(W-M,31,f'{n:02d} / {total:02d}')
- c.setFillColor(BLUE);c.setFont('Strong',9);c.drawString(M,H-93,num+' / '+('INVESTIGACIÓN' if d is PAPER else 'APLICACIÓN'))
+ c.setFillColor(BLUE);c.setFont('Strong',9);c.drawString(M,H-93,num+' / '+('INVESTIGACIÓN' if d is RESEARCH_GUIDE else 'APLICACIÓN'))
  title_style=ParagraphStyle('title',fontName='Strong',fontSize=26,leading=30,textColor=INK)
  p=Paragraph(escape(title),title_style);_,h=p.wrap(CW,100);p.drawOn(c,M,H-114-h)
  c.bookmarkPage('p'+num);c.addOutlineEntry(title,'p'+num)
@@ -115,13 +122,13 @@ def blocks(c,items,y):
   elif typ=='sources':
    for ident,title,note,url in SOURCES:
     y=para(c,f'[{ident}] {title}',M,y,style='heading')-3;y=para(c,note,M,y,style='small')-5
-    link=Paragraph(f'<link href="{url}" color="#0066DA">{escape(url)}</link>',styles['small']);_,hh=link.wrap(CW,200);link.drawOn(c,M,y-hh);y-=hh+15
+    link=Paragraph(f'<link href="{url}" color="#1557A6">{escape(url)}</link>',styles['small']);_,hh=link.wrap(CW,200);link.drawOn(c,M,y-hh);y-=hh+15
    y=para(c,'Consulta de fuentes: 19 de octubre de 2026. No se redistribuyen las normas.',M,y,style='small')-15
   if y<67:raise RuntimeError(f'Page overflow: y={y:.1f}, block={typ}')
  return y
 
 def markdown(d):
- lines=['# '+d['title'].replace('\n',' '),'',d['subtitle'],'','> v0.1 · Borrador público · 19 de octubre de 2026','',d['cover_note'],'']
+ lines=['# '+d['title'].replace('\n',' '),'',d['subtitle'],'','> v0.2 · Versión de trabajo · 19 de octubre de 2026','',d['cover_note'],'']
  for num,title,items in d['pages']:
   lines+=['## '+num+' · '+title,'']
   for b in items:
@@ -136,11 +143,11 @@ def markdown(d):
  return '\n'.join(lines)
 
 def build(d):
- path=OUT/d['filename'];total=len(d['pages'])+1
+ path=ROOT/d['directory']/d['filename'];path.parent.mkdir(parents=True,exist_ok=True);total=len(d['pages'])+1
  c=canvas.Canvas(str(path),pagesize=(W,H),pageCompression=1,invariant=1)
- c.setTitle(d['title'].replace('\n',' '));c.setAuthor('Ricardo Martínez / NullGhost Research');c.setSubject('Propuesta conceptual v0.1; sin conformidad demostrada')
+ c.setTitle(d['title'].replace('\n',' '));c.setAuthor('Ricardo Martínez / NullGhost Research');c.setSubject('Guía y manual de trabajo v0.2; sin conformidad demostrada')
  cover(c,d,total)
  for i,(num,title,items) in enumerate(d['pages'],2):
   y=chrome(c,d,i,total,num,title);last=blocks(c,items,y);print(d['filename'],i,'bottom',round(last));c.showPage()
  c.save();path.with_suffix('.md').write_text(markdown(d),encoding='utf-8')
-for d in (PAPER,GUIDE):build(d)
+for d in (RESEARCH_GUIDE,MANUAL):build(d)

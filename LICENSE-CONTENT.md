@@ -1,3 +1,3 @@
-Original document text and artwork © 2026 Ricardo Martínez / NullGhost Research. Licensed under Creative Commons Attribution 4.0 International: https://creativecommons.org/licenses/by/4.0/
+Texto y gráficos originales © 2026 Ricardo Martínez / NullGhost, bajo CC BY 4.0: https://creativecommons.org/licenses/by/4.0/
 
-This license excludes third-party standards, marks and referenced material.
+Se excluyen los logotipos y marcas de NullGhost y los materiales de terceros, incluidas las normas referenciadas. Los activos de marca se suministran para reproducir estos documentos con su identidad oficial.

@@ -1,37 +1,39 @@
-# Govern AI. Protect its systems. / Gobernar la IA. Proteger sus sistemas.
+# Guía de investigación y manual de buenas prácticas de IA
 
-NullGhost Research · **public draft v0.1** · 19 October 2026.
+**NullGhost · versión de trabajo v0.2 · 19 de octubre de 2026.**
 
-A conceptual architecture and evidence protocol for AI-enabled security work, informed by the public scopes of ISO/IEC 42001:2023 and ISO/IEC 27090:2026. Includes a practical workbook. This is original analysis, not an ISO publication, conformity assessment or certification claim.
+Dos materiales prácticos para estudiar y documentar la gestión y seguridad de IA a partir del alcance público de ISO/IEC 42001:2023 e ISO/IEC 27090:2026. Se publican como guía y manual, con la identidad oficial de NullGhost. Son documentos distintos de la serie de papers académicos de la organización.
 
-Una propuesta para conectar decisiones de gestión, protección técnica y evidencia revisable en NullGhost. El protocolo todavía no ha sido validado experimentalmente y no se ha completado la revisión de las normas íntegras.
+## Documentos
 
-## Documents / Documentos
-
-| Documento | PDF | Fuente editable |
+| Tipo | PDF (español) | Fuente editable |
 |---|---|---|
-| Paper conceptual (ES, 10 páginas) | [Gobernar la IA. Proteger sus sistemas.](paper/es/Gobernar_y_Proteger_IA.pdf) | [Markdown](paper/es/Gobernar_y_Proteger_IA.md) |
-| Guía práctica (ES, 9 páginas) | [De la intención a la evidencia.](paper/es/Guia_Practica_IA_ISO.pdf) | [Markdown](paper/es/Guia_Practica_IA_ISO.md) |
+| Guía de investigación, 10 páginas | [Gestión y seguridad de IA](guides/es/Guia_de_Investigacion_IA.pdf) | [Markdown](guides/es/Guia_de_Investigacion_IA.md) |
+| Manual de buenas prácticas, 9 páginas | [Prácticas de IA](manuals/es/Manual_de_Buenas_Practicas_IA.pdf) | [Markdown](manuals/es/Manual_de_Buenas_Practicas_IA.md) |
 
-The PDFs are in Spanish; the website provides ES/EN summaries. All documents are drafts for human review, not experimentally validated findings.
+[Ver en NullGhost](https://nullghost.io/ia-normas.html) · [Release v0.2](https://github.com/nullghost-io/ai-governance-evidence/releases/tag/v0.2)
 
-![Paper cover](assets/paper-cover.png)
+![Guía de investigación](assets/research-guide-cover.png)
 
-## Scope and limits / Alcance y límites
+## Research guide and good-practice manual
 
-- Public ISO catalog entries support identity, edition and general scope. Full standards were not reviewed or redistributed; no clause-level mapping is claimed.
-- NIST AI 100-2e2025 was consulted selectively, including sections 3.4 and 3.5. The AI RMF page provides context, not a completed crosswalk.
-- Architecture, evidence states, metrics and adoption stages are NullGhost proposals. No success rates or model comparisons were measured for this publication.
-- Examples are synthetic. No client identifiers, reports, credentials or operational artifacts are included.
-- AI-assisted drafting. Human technical review and empirical validation remain pending. Publication makes the draft available for review, not certified.
+The Spanish PDFs contain research questions, an evidence workflow and practical templates. ES/EN summaries are available on the website. These are working guides and manuals, not entries in NullGhost's academic paper series. Version 0.2 replaces the earlier document classification and uses the official brand assets.
 
-## Templates
+## Alcance y revisión pendiente
 
-[Inventory](templates/inventario.csv) · [Risks](templates/riesgos.csv) · [Tests](templates/pruebas.csv) · [Application matrix](templates/matriz_aplicacion.csv).
+- Fichas oficiales contrastadas para identidad, edición y alcance general. No se han revisado íntegramente las normas ISO ni se redistribuyen.
+- NIST AI 100-2e2025 consultado selectivamente, incluidas secciones 3.4 y 3.5. La página de AI RMF sirve como contexto, no como cruce normativo completo.
+- Las prácticas, los estados de evidencia y los criterios son propuestas de NullGhost. No se presenta una campaña experimental ni resultados de eficacia.
+- Ejemplos sintéticos; sin datos de clientes. Revisión técnica humana, contraste normativo y validación del protocolo pendientes.
+- Elaboración asistida por IA; sin certificación o conformidad demostrada.
 
-Templates contain headers only. Fill them for one authorized system; leave normative references pending until verified against the applicable edition.
+## Plantillas
 
-## Rebuild
+[Inventario](templates/inventario.csv) · [Riesgos](templates/riesgos.csv) · [Pruebas](templates/pruebas.csv) · [Matriz de aplicación](templates/matriz_aplicacion.csv).
+
+Contienen cabeceras, sin datos inventados. Las referencias de cláusula se completan solo después de verificarlas.
+
+## Reconstruir
 
 ```sh
 python3 -m venv .venv
@@ -40,14 +42,14 @@ pip install -r requirements.txt
 python3 build_pdf.py
 ```
 
-`content.py` is the canonical editable content. `build_pdf.py` produces the PDFs and Markdown companions. On macOS it uses installed Arial; elsewhere PDF core Helvetica is the fallback. Font metrics may differ. Render and inspect every page after content or environment changes. No network access is required to build.
+Contenido canónico: `content.py`. El generador produce PDF y Markdown en `guides/es/` y `manuals/es/`. Inserta los SVG originales de `assets/brand/`, sin reconstruir el fantasma ni componer el logo con texto. Usa Arial instalada en macOS o Helvetica como alternativa portable; revisar el render al cambiar de entorno.
 
-## Sources and versions
+## Versiones y fuentes
 
-[Source ledger](sources.json) · [Changelog](CHANGELOG.md) · [Document hashes](SHA256SUMS.txt).
+[Historial](CHANGELOG.md) · [Fuentes](sources.json) · [Huellas](SHA256SUMS.txt).
 
-Official references: [42001](https://www.iso.org/standard/42001), [27090](https://www.iso.org/standard/27090), [NIST AI 100-2e2025](https://doi.org/10.6028/NIST.AI.100-2e2025), [NIST AI RMF](https://www.nist.gov/itl/ai-risk-management-framework).
+La v0.1 fue una primera publicación mal clasificada como paper y con una marca reconstruida. Está sustituida por v0.2 y se conserva solo como historial; utilizar las rutas actuales.
 
-## License
+## Licencias
 
-Original code: MIT, see LICENSE. Original document text and artwork: CC BY 4.0, see LICENSE-CONTENT.md. Third-party standards and materials retain their own rights. No endorsement by ISO or NIST is implied.
+Código original: MIT. Texto y gráficos originales: CC BY 4.0. Las marcas y logotipos de NullGhost, normas y materiales de terceros conservan sus derechos y quedan excluidos de esa licencia. Ver LICENSE y LICENSE-CONTENT.md.

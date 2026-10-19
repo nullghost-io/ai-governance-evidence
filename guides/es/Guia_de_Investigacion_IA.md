@@ -1,32 +1,32 @@
-# Gobernar la IA. Proteger sus sistemas.
+# Guía de investigación en gestión y seguridad de IA
 
-Una ruta de evidencia para NullGhost a partir de ISO/IEC 42001:2023 e ISO/IEC 27090:2026.
+Una ruta de trabajo para estudiar ISO/IEC 42001:2023 e ISO/IEC 27090:2026 y reunir evidencia verificable.
 
-> v0.1 · Borrador público · 19 de octubre de 2026
+> v0.2 · Versión de trabajo · 19 de octubre de 2026
 
-Arquitectura propuesta, protocolo de evaluación y límites de las afirmaciones. Sin resultados experimentales nuevos ni declaración de conformidad.
+Preguntas, fronteras, fuentes y criterios de revisión para investigar un uso de IA en NullGhost. Incluye alcance de las fuentes y pendientes normativos identificados.
 
-## 01 · Una misma decisión, dos preguntas
+## 01 · Cómo usar esta guía de investigación
 
-> **TESIS.** La gobernanza define quién responde. La seguridad comprueba qué puede fallar. La evidencia enlaza ambas conversaciones.
+> **OBJETIVO.** Investigar un uso de IA acotado, documentar qué puede fallar y reunir evidencia que permita a otra persona revisar las conclusiones.
 
-### Resumen
+### Propósito y audiencia
 
-Este trabajo propone una ruta para organizar la gestión de los usos de IA y la evaluación de su superficie técnica en un equipo de seguridad pequeño. El caso de diseño es un agente que solicita herramientas mediante MCP, ejecuta parte del trabajo en una máquina virtual y produce un informe con evidencia. No se presenta como implementación certificada ni como un estudio de eficacia.
+Usa esta guía para preparar una investigación sobre un sistema de IA de alcance conocido. Empieza por su finalidad y sus responsables; después dibuja sus fronteras, identifica amenazas y decide qué pruebas y fuentes necesitas. El ejemplo de trabajo es un agente con herramientas MCP y una máquina virtual. La guía no acredita que esa arquitectura esté implementada o certificada.
 
-La contribución es una cadena de registros y decisiones: alcance, activo, amenaza, prueba, observación y afirmación. Cada enlace tiene un responsable y una condición de revisión. La propuesta busca que un lector pueda reconstruir por qué se autorizó una operación y qué permite concluir su resultado.
+Prepara seis registros enlazados: alcance, activo, amenaza, prueba, observación y afirmación. Asigna un responsable y una condición de revisión a cada uno. El expediente debe permitir reconstruir por qué se autorizó una operación y qué permite concluir su resultado. No necesitas empezar con todos los sistemas de la organización: elige uno y haz explícitas sus exclusiones.
 
-### Pregunta de investigación
+### Pregunta para orientar el trabajo
 
 ¿Cómo puede NullGhost vincular el gobierno de sus usos de IA con pruebas técnicas verificables sin confundir automatización, aislamiento virtualizado y conformidad normativa?
 
-| Aporte propio | Entregable |
+| Ruta de investigación | Qué debes preparar |
 | --- | --- |
 | Arquitectura de referencia | Fronteras entre operador, modelo, herramientas, VM y almacenamiento. |
 | Protocolo de evaluación | Casos sintéticos con controles, resultados esperados y criterios de descarte. |
 | Guía de adopción | Responsables y artefactos que pueden revisarse antes de cualquier mapeo por cláusula. |
 
-Audiencia: responsables de seguridad, gobierno de IA e ingeniería. La guía complementaria convierte la propuesta en fichas de trabajo. Estado editorial: borrador público v0.1, con asistencia de IA y revisión humana pendiente de firma.
+Dirigida a responsables de seguridad, gobierno de IA e ingeniería. El manual complementario ofrece fichas de aplicación. Lee primero el alcance de las fuentes, completa las preguntas por sistema y conserva las dudas abiertas. Versión de trabajo v0.2; revisión técnica humana pendiente.
 
 ## 02 · Qué aporta cada referencia
 
@@ -101,7 +101,7 @@ El protocolo propuesto utiliza un entorno local con archivos sintéticos, herram
 
 Para cada caso debe existir una tarea legítima equivalente sin el estímulo adversarial. Registrar modelo y versión de la herramienta, configuración, límites de tiempo y parámetros disponibles. Repetir con un número de intentos fijado antes de empezar; publicar todos los resultados, incluidos los fallidos.
 
-> **NO HAY UN BENCHMARK AQUÍ.** Este documento define un protocolo. No se ejecutaron sus casos como campaña experimental ni se estimaron tasas de éxito. No hay comparación de proveedores o modelos.
+> **NO HAY UN BENCHMARK AQUÍ.** Estos casos sirven para diseñar una evaluación. No se ejecutaron como campaña experimental ni se estimaron tasas de éxito. La guía no compara proveedores o modelos.
 
 La repetición de una operación no equivale a independencia estadística. Deben separarse cambios de modelo, navegador y permisos; cambiar varios a la vez impide atribuir la causa del resultado.
 
@@ -147,7 +147,7 @@ El entregable inmediato es una matriz de trabajo con estados: pendiente, diseña
 
 ### Validez y límites
 
-Esta es una propuesta conceptual de un solo equipo. No hay estudio longitudinal, campaña experimental nueva, muestra representativa ni revisión independiente completada. Las fichas públicas permiten verificar identidad, estado y alcance general de las normas; no sustituyen su texto completo.
+La guía reúne una propuesta de trabajo de NullGhost. Sus prácticas y criterios de evaluación requieren adaptación al sistema y revisión independiente. No ofrece resultados de una campaña experimental ni conclusiones generalizables de eficacia. Las fichas públicas permiten verificar identidad, estado y alcance general de las normas; no sustituyen su texto completo.
 
 El protocolo no cubre por sí solo entrenamiento, privacidad, discriminación, propiedad intelectual, contratación, seguridad física o continuidad. Debe adaptarse al sistema. Tampoco se inspeccionaron aquí todas las configuraciones de conectores, redes y almacenamiento que podría utilizar NullGhost.
 
@@ -158,11 +158,11 @@ El protocolo no cubre por sí solo entrenamiento, privacidad, discriminación, p
 3. **Revisar de forma independiente.** Separar autor de la conclusión y revisor de la evidencia; publicar desacuerdos.
 4. **Actualizar sin borrar.** Versionar correcciones y enlazar cada afirmación revisada con el resultado que la cambió.
 
-### Conclusión
+### Antes de cerrar la investigación
 
-La contribución propuesta para NullGhost es un método de trabajo que une decisiones responsables con evidencia técnica revisable. Su valor deberá evaluarse mediante los experimentos definidos y la revisión de las normas completas. Hasta entonces, el estado correcto es ruta de aplicación propuesta, no conformidad demostrada.
+Comprueba que el alcance, las fuentes, las pruebas y las conclusiones se pueden reconstruir. Entrega también los pendientes y las condiciones que harían cambiar la decisión. Las prácticas deben contrastarse con las normas completas y con resultados de evaluación; no conviertas un expediente bien presentado en una declaración de conformidad.
 
-Disponibilidad: fuentes editables, guía, plantillas y versiones en github.com/nullghost-io/ai-governance-evidence. Los documentos ISO no se redistribuyen. No se incluyen datos de clientes ni evidencias de sus sistemas.
+Disponibilidad: fuentes editables, manual, plantillas y versiones en github.com/nullghost-io/ai-governance-evidence. Los documentos ISO no se redistribuyen. No se incluyen datos de clientes ni evidencias de sus sistemas.
 
 ## 09 · Referencias y trazabilidad editorial
 
@@ -177,6 +177,6 @@ Disponibilidad: fuentes editables, guía, plantillas y versiones en github.com/n
 
 ### Proveniencia y revisión
 
-Autoría editorial: Ricardo Martínez / NullGhost Research. Elaboración asistida por IA. Corte de fuentes: 19 de octubre de 2026, America/Mexico_City. Versión 0.1. Revisión técnica humana y mapeo normativo pendientes. La publicación del borrador facilita revisión; no constituye un aval de ISO o NIST.
+Preparado por: Ricardo Martínez / NullGhost Research. Elaboración asistida por IA. Corte de fuentes: 19 de octubre de 2026, America/Mexico_City. Versión 0.2. Revisión técnica humana y mapeo normativo pendientes. La publicación del documento facilita revisión; no constituye un aval de ISO o NIST.
 
 > **POLÍTICA DE CAMBIOS.** Una corrección debe decir qué afirmación cambia, por qué y con qué fuente o prueba. La próxima versión debe distinguir cambios editoriales de nuevos resultados.

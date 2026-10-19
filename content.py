@@ -5,22 +5,22 @@ SOURCES = [
  ('3','NIST AI 100-2e2025','Vassilev et al., marzo de 2025. Secciones 3.4 y 3.5 sobre inyección indirecta y agentes; lectura selectiva.','https://doi.org/10.6028/NIST.AI.100-2e2025'),
  ('4','NIST AI Risk Management Framework','Página oficial y descripción de AI RMF 1.0; no se realizó un cruce completo con el marco.','https://www.nist.gov/itl/ai-risk-management-framework')]
 # Blocks: paragraph, heading, callout, table, diagram, steps.
-PAPER = {
- 'filename':'Gobernar_y_Proteger_IA.pdf','kind':'PAPER / PROPUESTA CONCEPTUAL','title':'Gobernar la IA.\nProteger sus\nsistemas.','subtitle':'Una ruta de evidencia para NullGhost a partir de ISO/IEC 42001:2023 e ISO/IEC 27090:2026.',
- 'cover_note':'Arquitectura propuesta, protocolo de evaluación y límites de las afirmaciones. Sin resultados experimentales nuevos ni declaración de conformidad.',
+RESEARCH_GUIDE = {
+ 'directory':'guides/es','filename':'Guia_de_Investigacion_IA.pdf','kind':'GUÍA DE INVESTIGACIÓN','title':'Guía de investigación\nen gestión y\nseguridad de IA','subtitle':'Una ruta de trabajo para estudiar ISO/IEC 42001:2023 e ISO/IEC 27090:2026 y reunir evidencia verificable.',
+ 'cover_note':'Preguntas, fronteras, fuentes y criterios de revisión para investigar un uso de IA en NullGhost. Incluye alcance de las fuentes y pendientes normativos identificados.',
  'pages':[
- ('01','Una misma decisión, dos preguntas',[
-  ('callout','TESIS','La gobernanza define quién responde. La seguridad comprueba qué puede fallar. La evidencia enlaza ambas conversaciones.'),
-  ('heading','Resumen'),
-  ('p','Este trabajo propone una ruta para organizar la gestión de los usos de IA y la evaluación de su superficie técnica en un equipo de seguridad pequeño. El caso de diseño es un agente que solicita herramientas mediante MCP, ejecuta parte del trabajo en una máquina virtual y produce un informe con evidencia. No se presenta como implementación certificada ni como un estudio de eficacia.'),
-  ('p','La contribución es una cadena de registros y decisiones: alcance, activo, amenaza, prueba, observación y afirmación. Cada enlace tiene un responsable y una condición de revisión. La propuesta busca que un lector pueda reconstruir por qué se autorizó una operación y qué permite concluir su resultado.'),
-  ('heading','Pregunta de investigación'),
+ ('01','Cómo usar esta guía de investigación',[
+  ('callout','OBJETIVO','Investigar un uso de IA acotado, documentar qué puede fallar y reunir evidencia que permita a otra persona revisar las conclusiones.'),
+  ('heading','Propósito y audiencia'),
+  ('p','Usa esta guía para preparar una investigación sobre un sistema de IA de alcance conocido. Empieza por su finalidad y sus responsables; después dibuja sus fronteras, identifica amenazas y decide qué pruebas y fuentes necesitas. El ejemplo de trabajo es un agente con herramientas MCP y una máquina virtual. La guía no acredita que esa arquitectura esté implementada o certificada.'),
+  ('p','Prepara seis registros enlazados: alcance, activo, amenaza, prueba, observación y afirmación. Asigna un responsable y una condición de revisión a cada uno. El expediente debe permitir reconstruir por qué se autorizó una operación y qué permite concluir su resultado. No necesitas empezar con todos los sistemas de la organización: elige uno y haz explícitas sus exclusiones.'),
+  ('heading','Pregunta para orientar el trabajo'),
   ('p','¿Cómo puede NullGhost vincular el gobierno de sus usos de IA con pruebas técnicas verificables sin confundir automatización, aislamiento virtualizado y conformidad normativa?'),
-  ('table',['Aporte propio','Entregable'],[
+  ('table',['Ruta de investigación','Qué debes preparar'],[
    ['Arquitectura de referencia','Fronteras entre operador, modelo, herramientas, VM y almacenamiento.'],
    ['Protocolo de evaluación','Casos sintéticos con controles, resultados esperados y criterios de descarte.'],
    ['Guía de adopción','Responsables y artefactos que pueden revisarse antes de cualquier mapeo por cláusula.']]),
-  ('p','Audiencia: responsables de seguridad, gobierno de IA e ingeniería. La guía complementaria convierte la propuesta en fichas de trabajo. Estado editorial: borrador público v0.1, con asistencia de IA y revisión humana pendiente de firma.')]),
+  ('p','Dirigida a responsables de seguridad, gobierno de IA e ingeniería. El manual complementario ofrece fichas de aplicación. Lee primero el alcance de las fuentes, completa las preguntas por sistema y conserva las dudas abiertas. Versión de trabajo v0.2; revisión técnica humana pendiente.')]),
  ('02','Qué aporta cada referencia',[
   ('p','ISO/IEC 42001:2023 establece requisitos para un sistema de gestión de IA [1]. ISO/IEC 27090:2026 ofrece orientación sobre amenazas y compromisos de seguridad contra sistemas de IA a lo largo de su ciclo de vida [2]. Esta diferencia de foco orienta el diseño; no acredita equivalencia entre documentos.'),
   ('table',['Perspectiva','Pregunta de diseño de NullGhost','Evidencia propuesta'],[
@@ -63,7 +63,7 @@ PAPER = {
    ['Se intenta incluir un secreto sintético en el informe público','La revisión detecta el marcador antes de publicar; no se usan credenciales reales.']]),
   ('heading','Controles del experimento'),
   ('p','Para cada caso debe existir una tarea legítima equivalente sin el estímulo adversarial. Registrar modelo y versión de la herramienta, configuración, límites de tiempo y parámetros disponibles. Repetir con un número de intentos fijado antes de empezar; publicar todos los resultados, incluidos los fallidos.'),
-  ('callout','NO HAY UN BENCHMARK AQUÍ','Este documento define un protocolo. No se ejecutaron sus casos como campaña experimental ni se estimaron tasas de éxito. No hay comparación de proveedores o modelos.'),
+  ('callout','NO HAY UN BENCHMARK AQUÍ','Estos casos sirven para diseñar una evaluación. No se ejecutaron como campaña experimental ni se estimaron tasas de éxito. La guía no compara proveedores o modelos.'),
   ('p','La repetición de una operación no equivale a independencia estadística. Deben separarse cambios de modelo, navegador y permisos; cambiar varios a la vez impide atribuir la causa del resultado.')]),
  ('06','Medir lo que la evidencia permite',[
   ('table',['Medida propuesta','Definición y límite'],[
@@ -86,28 +86,28 @@ PAPER = {
   ('p','El entregable inmediato es una matriz de trabajo con estados: pendiente, diseñado, implementado, probado y revisado. La guía incluye plantillas para iniciar ese registro sin rellenarlo con supuestos.')]),
  ('08','Limitaciones y trabajo siguiente',[
   ('heading','Validez y límites'),
-  ('p','Esta es una propuesta conceptual de un solo equipo. No hay estudio longitudinal, campaña experimental nueva, muestra representativa ni revisión independiente completada. Las fichas públicas permiten verificar identidad, estado y alcance general de las normas; no sustituyen su texto completo.'),
+  ('p','La guía reúne una propuesta de trabajo de NullGhost. Sus prácticas y criterios de evaluación requieren adaptación al sistema y revisión independiente. No ofrece resultados de una campaña experimental ni conclusiones generalizables de eficacia. Las fichas públicas permiten verificar identidad, estado y alcance general de las normas; no sustituyen su texto completo.'),
   ('p','El protocolo no cubre por sí solo entrenamiento, privacidad, discriminación, propiedad intelectual, contratación, seguridad física o continuidad. Debe adaptarse al sistema. Tampoco se inspeccionaron aquí todas las configuraciones de conectores, redes y almacenamiento que podría utilizar NullGhost.'),
   ('heading','Qué permitiría una versión empírica'),
   ('steps',[('Congelar el protocolo','Publicar casos, controles, configuración, rúbrica y número de intentos antes de ejecutar.'),('Recolectar datos','Usar un laboratorio sintético y registrar intentos válidos, fallos y cambios de entorno.'),('Revisar de forma independiente','Separar autor de la conclusión y revisor de la evidencia; publicar desacuerdos.'),('Actualizar sin borrar','Versionar correcciones y enlazar cada afirmación revisada con el resultado que la cambió.')]),
-  ('heading','Conclusión'),
-  ('p','La contribución propuesta para NullGhost es un método de trabajo que une decisiones responsables con evidencia técnica revisable. Su valor deberá evaluarse mediante los experimentos definidos y la revisión de las normas completas. Hasta entonces, el estado correcto es ruta de aplicación propuesta, no conformidad demostrada.'),
-  ('p','Disponibilidad: fuentes editables, guía, plantillas y versiones en github.com/nullghost-io/ai-governance-evidence. Los documentos ISO no se redistribuyen. No se incluyen datos de clientes ni evidencias de sus sistemas.')]),
+  ('heading','Antes de cerrar la investigación'),
+  ('p','Comprueba que el alcance, las fuentes, las pruebas y las conclusiones se pueden reconstruir. Entrega también los pendientes y las condiciones que harían cambiar la decisión. Las prácticas deben contrastarse con las normas completas y con resultados de evaluación; no conviertas un expediente bien presentado en una declaración de conformidad.'),
+  ('p','Disponibilidad: fuentes editables, manual, plantillas y versiones en github.com/nullghost-io/ai-governance-evidence. Los documentos ISO no se redistribuyen. No se incluyen datos de clientes ni evidencias de sus sistemas.')]),
  ('09','Referencias y trazabilidad editorial',[
   ('sources',None),
   ('heading','Cómo leer las referencias'),
   ('p','[1] y [2] sostienen identidad, edición y alcance general; no un inventario de controles. [3] sostiene el vocabulario técnico seleccionado, con lectura parcial declarada. [4] es contexto público de gestión del riesgo. Arquitectura, estados, métricas y plan de adopción son propuestas originales de NullGhost.'),
   ('heading','Proveniencia y revisión'),
-  ('p','Autoría editorial: Ricardo Martínez / NullGhost Research. Elaboración asistida por IA. Corte de fuentes: 19 de octubre de 2026, America/Mexico_City. Versión 0.1. Revisión técnica humana y mapeo normativo pendientes. La publicación del borrador facilita revisión; no constituye un aval de ISO o NIST.'),
+  ('p','Preparado por: Ricardo Martínez / NullGhost Research. Elaboración asistida por IA. Corte de fuentes: 19 de octubre de 2026, America/Mexico_City. Versión 0.2. Revisión técnica humana y mapeo normativo pendientes. La publicación del documento facilita revisión; no constituye un aval de ISO o NIST.'),
   ('callout','POLÍTICA DE CAMBIOS','Una corrección debe decir qué afirmación cambia, por qué y con qué fuente o prueba. La próxima versión debe distinguir cambios editoriales de nuevos resultados.')])
  ]}
-GUIDE = {
- 'filename':'Guia_Practica_IA_ISO.pdf','kind':'GUÍA / CUADERNO DE APLICACIÓN','title':'De la intención\na la evidencia.','subtitle':'Guía de trabajo para aplicar la ruta de gestión y seguridad de IA en NullGhost.',
- 'cover_note':'Plantillas, responsables y criterios de salida. Complemento del paper Gobernar la IA. Proteger sus sistemas. Borrador v0.1.',
+MANUAL = {
+ 'directory':'manuals/es','filename':'Manual_de_Buenas_Practicas_IA.pdf','kind':'MANUAL DE BUENAS PRÁCTICAS','title':'Manual de buenas\nprácticas de IA','subtitle':'Prácticas de gestión, protección y evidencia para trabajar con IA en NullGhost.',
+ 'cover_note':'Inventario, riesgos, pruebas, responsables y revisión antes de publicar. Incluye plantillas editables y criterios de salida. Versión de trabajo v0.2.',
  'pages':[
  ('01','Empezar por un sistema',[
   ('callout','OBJETIVO','Construir un expediente que permita revisar decisiones y resultados. No completar una lista para aparentar cumplimiento.'),
-  ('p','Esta guía traduce una propuesta de NullGhost en actividades concretas. Toma como referencias de alcance ISO/IEC 42001:2023 para la gestión de IA [1] e ISO/IEC 27090:2026 para amenazas contra sistemas de IA [2]. No reemplaza las normas ni demuestra que sus requisitos estén satisfechos.'),
+  ('p','Este manual organiza prácticas propuestas por NullGhost. Sus referencias de alcance son ISO/IEC 42001:2023, gestión de IA [1], e ISO/IEC 27090:2026, amenazas contra sistemas de IA [2]. No reemplaza las normas ni acredita conformidad.'),
   ('heading','Antes de ejecutar'),
   ('steps',[('Elegir una finalidad','Definir qué hace el sistema, para quién y qué decisión ayuda a tomar.'),('Nombrar un responsable','Alguien debe poder aceptar el riesgo, detener la prueba y revisar el informe.'),('Delimitar el laboratorio','Usar datos sintéticos y destinos locales. Documentar conexiones con el host y servicios externos.'),('Fijar la salida','Acordar qué evidencia permitiría avanzar, qué la vuelve inconclusa y qué exige parar.')]),
   ('table',['Rol propuesto','Responsabilidad'],[
@@ -115,7 +115,7 @@ GUIDE = {
    ['Ingeniería / seguridad','Configuración, amenazas y ejecución del plan autorizado.'],
    ['Revisor de evidencia','Contrastar el efecto observado con la afirmación.'],
    ['Responsable de publicación','Verificar versión, procedencia, datos excluidos y autorización de difusión.']]),
-  ('p','Una persona puede desempeñar más de un rol en un equipo pequeño; debe declararse el conflicto. Una autoevaluación no debe presentarse como una revisión independiente.')]),
+  ('p','Si una persona asume varios roles, declara el conflicto. Una autoevaluación no equivale a revisión independiente.')]),
  ('02','Ficha de inventario',[
   ('p','Crear una fila por sistema y registrar las dependencias relevantes. El siguiente ejemplo es ficticio y no describe una configuración real de Kirux o NullGhost.'),
   ('table',['Campo','Ejemplo sintético'],[
@@ -165,7 +165,7 @@ GUIDE = {
   ('heading','Ejemplo de registro, no evidencia real'),
   ('code','{\n  "assessment_id": "DEMO-001",\n  "test_id": "T03",\n  "environment": "local-synthetic",\n  "status": "inconclusive",\n  "reason": "simulated timeout",\n  "claim": "No conclusion about security"\n}'),
   ('p','El manifiesto permite detectar alteraciones respecto a la versión sellada. No acredita que el contenido sea verdadero, que el reloj fuera correcto o que existiera autorización. Esas condiciones requieren registros y revisión adicionales.'),
-  ('callout','SEPARAR DIFUSIÓN Y CONSERVACIÓN','Un expediente privado puede contener detalles que no deben entrar en el paper público. La autorización para probar un sistema no se convierte automáticamente en permiso para divulgar su identidad o sus datos.')]),
+  ('callout','SEPARAR DIFUSIÓN Y CONSERVACIÓN','Un expediente privado puede contener detalles que no deben entrar en el documento público. La autorización para probar un sistema no se convierte automáticamente en permiso para divulgar su identidad o sus datos.')]),
  ('06','Plan de trabajo en cuatro etapas',[
   ('p','La siguiente secuencia es una estimación de planificación, no un método de aprendizaje validado ni una promesa de certificación en cuatro semanas. Cada etapa avanza cuando su salida es revisable; no por cumplir una fecha.'),
   ('steps',[('Etapa 1 / alcance','Entregar inventario, finalidad, responsables y límites. Salida: el dueño valida qué se evalúa y qué queda fuera.'),('Etapa 2 / amenazas','Entregar escenarios, consecuencias y tratamientos propuestos. Salida: cada riesgo tiene dueño y evidencia esperada.'),('Etapa 3 / contraste normativo','Consultar las ediciones completas con acceso legítimo. Salida: referencias verificadas, aplicabilidad y dudas registradas.'),('Etapa 4 / pruebas y revisión','Ejecutar el plan autorizado en laboratorio. Salida: expediente reproducible, revisión humana y acciones de mejora.')]),
@@ -182,12 +182,12 @@ GUIDE = {
   ('heading','Cierre operativo'),
   ('p','Detener herramientas y servicios temporales, cerrar pestañas del laboratorio y dejar una nota de continuidad. Conservar los originales y sus huellas. No borrar evidencias que contradigan la conclusión. La reanudación requiere revisar la vigencia del alcance y los cambios de entorno.'),
   ('callout','CRITERIO FINAL','El lector puede reconstruir qué se autorizó, qué se hizo y qué cambió. Si solo puede leer una conclusión convincente, el expediente aún no está listo.'),
-  ('p','Esta guía es un punto de partida para desarrollar prácticas verificables. La validación del protocolo y la revisión completa de las normas son trabajo pendiente de una versión posterior.')]),
+  ('p','Este manual es un punto de partida para desarrollar prácticas verificables. La validación del protocolo y la revisión completa de las normas son trabajo pendiente de una versión posterior.')]),
  ('08','Fuentes, plantillas y siguientes versiones',[
   ('sources',None),
   ('heading','Material editable'),
-  ('p','El repositorio incluye contenido de los documentos, el generador PDF y plantillas CSV. Los ejemplos son sintéticos. No contiene las normas ISO ni información de clientes. Los documentos se publican como borradores v0.1 para revisión.'),
-  ('p','Repositorio: github.com/nullghost-io/ai-governance-evidence. Documento compañero: Gobernar la IA. Proteger sus sistemas. La documentación pública de NIST AI RMF [4] es contexto complementario; no se ha completado un cruce normativo.'),
+  ('p','El repositorio incluye contenido de los documentos, el generador PDF y plantillas CSV. Los ejemplos son sintéticos. No contiene las normas ISO ni información de clientes. Los documentos se publican como documentos de trabajo v0.2 para revisión.'),
+  ('p','Repositorio: github.com/nullghost-io/ai-governance-evidence. Documento complementario: Guía de investigación en gestión y seguridad de IA. La documentación pública de NIST AI RMF [4] es contexto complementario; no se ha completado un cruce normativo.'),
   ('callout','PRÓXIMA VERSIÓN','Revisión humana del contenido, contraste con textos completos y ejecución del protocolo sintético. Solo después se incorporarán resultados y un mapeo defendible.'),
   ('p','Elaboración asistida por IA. Revisión técnica humana pendiente. Sin conformidad demostrada.')])
  ]}
