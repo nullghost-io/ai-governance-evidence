@@ -1,0 +1,10 @@
+cff-version: 1.2.0
+message: "Please cite the version and note that this is a conceptual public draft."
+title: "Gobernar la IA. Proteger sus sistemas."
+authors:
+  - family-names: Martínez
+    given-names: Ricardo
+version: 0.1
+date-released: 2026-10-19
+url: "https://github.com/nullghost-io/ai-governance-evidence"
+type: report

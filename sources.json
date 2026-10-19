@@ -1,0 +1,30 @@
+{
+  "accessed": "2026-10-19",
+  "timezone": "America/Mexico_City",
+  "sources": [
+    {
+      "id": "1",
+      "title": "ISO/IEC 42001:2023",
+      "review_scope": "Ficha oficial. Alcance y edición; diciembre de 2023. Texto íntegro no revisado.",
+      "url": "https://www.iso.org/standard/42001"
+    },
+    {
+      "id": "2",
+      "title": "ISO/IEC 27090:2026",
+      "review_scope": "Ficha oficial y ciclo de vida. Publicación: 14 de octubre de 2026. Texto íntegro no revisado.",
+      "url": "https://www.iso.org/standard/27090"
+    },
+    {
+      "id": "3",
+      "title": "NIST AI 100-2e2025",
+      "review_scope": "Vassilev et al., marzo de 2025. Secciones 3.4 y 3.5 sobre inyección indirecta y agentes; lectura selectiva.",
+      "url": "https://doi.org/10.6028/NIST.AI.100-2e2025"
+    },
+    {
+      "id": "4",
+      "title": "NIST AI Risk Management Framework",
+      "review_scope": "Página oficial y descripción de AI RMF 1.0; no se realizó un cruce completo con el marco.",
+      "url": "https://www.nist.gov/itl/ai-risk-management-framework"
+    }
+  ]
+}
