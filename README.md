@@ -15,6 +15,10 @@ Dos materiales prácticos para estudiar y documentar la gestión y seguridad de 
 
 ![Guía de investigación](assets/research-guide-cover.png)
 
+## Video y publicación web
+
+[Video español](video/iso-ai-es.mp4) · [English video](video/iso-ai-en.mp4). Dos versiones de 30 segundos con la marca oficial. Integrados en Inicio, Investigaciones y la página de las guías; referencias ISO en Servicios. Los documentos conservan su versión v0.2.
+
 ## Research guide and good-practice manual
 
 The Spanish PDFs contain research questions, an evidence workflow and practical templates. ES/EN summaries are available on the website. These are working guides and manuals, not entries in NullGhost's academic paper series. Version 0.2 replaces the earlier document classification and uses the official brand assets.
