@@ -165,4 +165,5 @@ def build(d):
  for i,(num,title,items) in enumerate(d['pages'],2):
   y=chrome(c,d,i,total,num,title);last=blocks(c,items,y);print(d['filename'],i,'bottom',round(last));c.showPage()
  c.save();path.with_suffix('.md').write_text(markdown(d),encoding='utf-8')
-for d in (RESEARCH_GUIDE,MANUAL):build(d)
+if __name__=='__main__':
+ for d in (RESEARCH_GUIDE,MANUAL):build(d)

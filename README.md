@@ -43,10 +43,10 @@ Contienen cabeceras, sin datos inventados. Las referencias de cláusula se compl
 python3 -m venv .venv
 . .venv/bin/activate
 pip install -r requirements.txt
-python3 build_pdf.py
+python3 build_premium.py
 ```
 
-Contenido canónico: `content.py`. El generador produce PDF y Markdown en `guides/es/` y `manuals/es/`. Inserta los SVG originales de `assets/brand/`, sin reconstruir el fantasma ni componer el logo con texto. Usa Arial instalada en macOS o Helvetica como alternativa portable; revisar el render al cambiar de entorno.
+Contenido canónico: `content.py`. `build_premium.py` genera los PDF con el diseño editorial de NullGhost (HTML impreso con Google Chrome, tipografía Inter y listón de `assets/premium/`, logos de `assets/brand/`) y su versión Markdown. Cada página es de tamaño fijo y el build falla si algún bloque se sale de su página. `build_pdf.py` es el generador anterior (ReportLab), conservado como alternativa sin Chrome.
 
 ## Versiones y fuentes
 

@@ -6,6 +6,8 @@ Reescritura de contenido de la guía y el manual. La guía ahora explica qué pi
 
 Se retiran el diagrama y el enfoque centrados en un agente con MCP y una máquina virtual, y un ejemplo de interacción con una página enmarcada que no aportaba al tema. La fecha de publicación de ISO/IEC 27090 queda marcada como no reverificada. Cada fuente lleva etiqueta [P] o [S].
 
+Diseño: nuevo generador `build_premium.py` con el estilo editorial de NullGhost (portada oscura con el listón de cristal, interiores claros con franja zafiro, Inter). El build falla si algún bloque se sale de su página.
+
 Revisión técnica humana y contraste con el texto íntegro de las normas siguen pendientes.
 
 ## v0.2 — 2026-10-19
