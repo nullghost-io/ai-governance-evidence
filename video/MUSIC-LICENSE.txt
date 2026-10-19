@@ -1,0 +1,8 @@
+Reel (iso-ai-reel-es.mp4): Cyberpunk City, Mixkit.
+Fuente: https://assets.mixkit.co/music/140/140.mp3
+Catálogo: https://mixkit.co/free-stock-music/technology/
+Licencia: Mixkit Stock Music Free License, https://mixkit.co/license/modal/musicFree/ (verificada el 19 de octubre de 2026).
+Permite uso comercial y no comercial en publicaciones de video en redes sociales y web; no requiere atribución.
+No permite remezclar ni usar en una pista solo de música, registrarla en servicios de gestión de derechos, ni usarla en CD/DVD, TV, radio o videojuegos.
+Uso: fragmento 0 a 32.6 s retrasado 0.4 s, fades de entrada y salida, normalizado a -16 LUFS.
+El audio no se distribuye por separado en este repositorio; solo va dentro del video.

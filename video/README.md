@@ -16,3 +16,7 @@ npx hyperframes render -c compositions/en.html -o renders/iso-ai-en.mp4 .
 ```
 
 Las portadas (`assets/guide.png`, `assets/manual.png`) salen de la primera página de cada PDF; el listón (`assets/ribbon.jpg`) viene de `../assets/premium/`. Inter incluye su licencia OFL; GSAP conserva su licencia de terceros. Marca NullGhost excluida de la licencia de contenido.
+
+## Reel para Instagram
+
+`iso-ai-reel-es.mp4`: 1080 × 1920, 33 s, con música. Fuente en `build_reel_pro.py` → `compositions/reel-pro-es.html`. El fantasma del hub es el emblema 3D del sitio (`assets/ghost3d.js`, mismo modelo que `landing/v2/emblem.js`, con Three.js r160 de `assets/vendor/three.min.js`, licencia MIT) dibujado cuadro por cuadro con el evento `hf-seek` de HyperFrames. La música se mezcla después del render con ffmpeg; procedencia y licencia en `MUSIC-LICENSE.txt`.

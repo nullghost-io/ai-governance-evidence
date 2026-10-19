@@ -39,6 +39,11 @@ CSS = r'''@font-face{font-family:Inter;src:url(../assets/inter.woff2) format("wo
 .pill{position:absolute;font-size:44px;font-weight:850;padding:20px 36px;border-radius:999px;border:3px solid #64a3ff;background:rgba(14,30,56,.85);box-shadow:0 0 60px rgba(100,163,255,.35)}
 .ring{position:absolute;border-radius:50%;border:3px solid #64a3ff}
 /* B hub */
+.g3w{position:absolute;left:280px;top:620px;width:520px;height:520px}
+.g3w canvas{width:520px;height:520px;display:block}
+.halo{position:absolute;left:190px;top:530px;width:700px;height:700px;border-radius:50%;background:radial-gradient(circle,rgba(100,163,255,.45),rgba(21,87,166,.18) 40%,transparent 68%)}
+.hubl{position:absolute;left:0;right:0;top:1078px;text-align:center}
+.hubl span{display:inline-block;font-size:32px;font-weight:800;padding:10px 26px;border-radius:999px;background:rgba(14,26,44,.92);border:2px solid #64a3ff}
 .hubn{position:absolute;left:400px;top:760px;width:280px;height:280px;border-radius:50%;border:4px solid #64a3ff;background:radial-gradient(circle at 50% 38%,#163566 0,#0a1322 72%);display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;box-shadow:0 0 90px rgba(100,163,255,.35)}
 .hubn img{width:120px;margin-bottom:8px}.hubn b{font-size:34px;line-height:1.08;letter-spacing:-.02em}
 .sat{position:absolute;width:240px;height:76px;margin:-38px 0 0 -120px;border-radius:999px;background:#0e1a2c;border:2px solid #2c4f86;display:flex;align-items:center;justify-content:center;font-size:32px;font-weight:700;color:#dfe8f2}
@@ -121,18 +126,18 @@ def html():
     cx, cy, rr = 540, 900, 345
     sats = ['datos', 'modelo', 'prompts', 'herramientas', 'salidas']
     lines, satd = '', ''
+    pos = [(195, 730), (195, 900), (195, 1070), (885, 790), (885, 1010)]
     for i, s in enumerate(sats):
-        a = math.radians(-90 + 72 * i + 36)
-        x, y = cx + rr * math.cos(a), cy + rr * math.sin(a) * .82
+        x, y = pos[i]
         lines += f'<path id="bl{i}" d="M{cx} {cy} L{x:.0f} {y:.0f}" stroke="#2f5a99" stroke-width="3" fill="none" pathLength="1" stroke-dasharray="1" stroke-dashoffset="1"/>'
         satd += f'<div class="sat" id="bs{i}" style="left:{x:.0f}px;top:{y:.0f}px">{s}</div>'
     B = ('<div class="sc" id="B"><div class="cam" id="Bc">'
          f'<svg class="full" viewBox="0 0 1080 1920">{lines}'
-         '<path id="bk1" d="M540 470 L540 760" stroke="#64a3ff" stroke-width="4" fill="none" pathLength="1" stroke-dasharray="1" stroke-dashoffset="1"/>'
-         '<path id="bk2" d="M540 1330 L540 1040" stroke="#64a3ff" stroke-width="4" fill="none" pathLength="1" stroke-dasharray="1" stroke-dashoffset="1"/>'
+         '<path id="bk1" d="M540 470 L540 690" stroke="#64a3ff" stroke-width="4" fill="none" pathLength="1" stroke-dasharray="1" stroke-dashoffset="1"/>'
+         '<path id="bk2" d="M540 1330 L540 1228" stroke="#64a3ff" stroke-width="4" fill="none" pathLength="1" stroke-dasharray="1" stroke-dashoffset="1"/>'
          '<circle id="bd1" cx="540" cy="470" r="11" fill="#9cc4ff" opacity="0"/><circle id="bd2" cx="540" cy="1330" r="11" fill="#9cc4ff" opacity="0"/></svg>'
          f'{satd}'
-         '<div class="hubn" id="bh"><img src="../assets/ghost.svg" alt=""><b>Tu sistema<br>de IA</b></div>'
+         '<div class="halo" id="bhalo"></div><div class="g3w" id="bh"><canvas id="g3d" data-start="4.45" data-size="520"></canvas></div><div class="hubl" id="bhl"><span>Tu sistema de IA</span></div>'
          '<div class="bcard" id="bc1" style="top:280px"><div class="r">ISO/IEC 42001:2023</div><b>Cómo gobernarla</b></div>'
          '<div class="bcard" id="bc2" style="top:1330px"><div class="r">ISO/IEC 27090:2026</div><b>Cómo la atacan</b></div>'
          '</div></div>')
@@ -215,8 +220,8 @@ def html():
             f'{A}{B}{C}{D}{E}{F}{G}{H}'
             f'<div class="full" id="vig"></div>{grain}<img id="logo" src="../assets/logo.svg" alt="NullGhost"></div>')
     return (f'<!doctype html><html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=1080,height=1920">'
-            f'<title>NullGhost · ISO IA · reel</title><script src="../assets/vendor/gsap.min.js"></script><style>{CSS}</style></head><body>'
-            f'{body}<script>{JS}</script></body></html>')
+            f'<title>NullGhost · ISO IA · reel</title><script src="../assets/vendor/gsap.min.js"></script><script src="../assets/vendor/three.min.js"></script><style>{CSS}</style></head><body>'
+            f'{body}<script>{JS}</script><script src="../assets/ghost3d.js"></script></body></html>')
 
 
 JS = r'''
@@ -261,7 +266,7 @@ zoomOut('#A',4.4);
 
 // ===== B: hub (4.5 - 8.7) =====
 zoomIn('#B',4.45); push('#Bc',4.45,4.3,1.08);
-pop('#bh',4.55);
+tl.fromTo('#bh',{opacity:0},{opacity:1,duration:.2},4.45);tl.fromTo('#bhalo',{opacity:0,scale:.4},{opacity:1,scale:1,duration:.8,ease:ex},4.5);up('#bhl',5.0);
 tl.to(['#bl0','#bl1','#bl2','#bl3','#bl4'],{strokeDashoffset:0,duration:.4,ease:ex,stagger:.08},4.8);
 pop('#B .sat',4.95,.08);
 tl.fromTo('#B .sat',{y:0},{y:-10,duration:1.2,ease:'sine.inOut',yoyo:true,repeat:2,stagger:.15},5.6);
@@ -270,9 +275,9 @@ tl.to('#bk1',{strokeDashoffset:0,duration:.35,ease:ex},6.05);
 tl.fromTo('#bc2',{opacity:0,y:160,filter:'blur(14px)'},{opacity:1,y:0,filter:'blur(0px)',duration:.55,ease:sp},6.4);
 tl.to('#bk2',{strokeDashoffset:0,duration:.35,ease:ex},6.75);
 tl.set(['#bd1','#bd2'],{opacity:1},6.9);
-tl.fromTo('#bd1',{attr:{cy:470}},{attr:{cy:760},duration:.6,ease:'power1.in',repeat:2},6.9);
-tl.fromTo('#bd2',{attr:{cy:1330}},{attr:{cy:1040},duration:.6,ease:'power1.in',repeat:2},6.9);
-tl.fromTo('#bh',{boxShadow:'0 0 90px rgba(100,163,255,.35)'},{boxShadow:'0 0 160px rgba(100,163,255,.85)',duration:.3,yoyo:true,repeat:5},6.9);
+tl.fromTo('#bd1',{attr:{cy:470}},{attr:{cy:690},duration:.6,ease:'power1.in',repeat:2},6.9);
+tl.fromTo('#bd2',{attr:{cy:1330}},{attr:{cy:1228},duration:.6,ease:'power1.in',repeat:2},6.9);
+tl.fromTo('#bhalo',{scale:1},{scale:1.18,duration:.45,ease:'sine.inOut',yoyo:true,repeat:3},6.9);
 // el hub se hunde y abre el anillo
 tl.to('#B',{scale:.35,opacity:0,filter:'blur(12px)',duration:.45,ease:'power3.in'},8.35);
 
