@@ -19,4 +19,4 @@ Las portadas (`assets/guide.png`, `assets/manual.png`) salen de la primera pági
 
 ## Reel para Instagram
 
-`iso-ai-reel-es.mp4`: 1080 × 1920, 33 s, con música. Fuente en `build_reel_pro.py` → `compositions/reel-pro-es.html`. El fantasma del hub es el emblema 3D del sitio (`assets/ghost3d.js`, mismo modelo que `landing/v2/emblem.js`, con Three.js r160 de `assets/vendor/three.min.js`, licencia MIT) dibujado cuadro por cuadro con el evento `hf-seek` de HyperFrames. La música se mezcla después del render con ffmpeg; procedencia y licencia en `MUSIC-LICENSE.txt`.
+`iso-ai-reel-es.mp4`: 1080 × 1920, 33 s, con música. Fuente en `build_reel_pro.py` → `compositions/reel-pro-es.html`. El fantasma del hub es el emblema 3D del sitio (`assets/ghost3d.js`, mismo modelo que `landing/v2/emblem.js`, con Three.js r160 de `assets/vendor/three.min.js`, licencia MIT) dibujado cuadro por cuadro con el evento `hf-seek` de HyperFrames. Tipografía: Inter y Hanken Grotesk (rótulos), ambas OFL; palabras clave en contorno con eco animado. La música se mezcla después del render con ffmpeg; procedencia y licencia en `MUSIC-LICENSE.txt`.
