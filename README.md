@@ -17,7 +17,7 @@ Dos materiales prácticos para estudiar y documentar la gestión y seguridad de 
 
 ## Video y publicación web
 
-[Video español](video/iso-ai-es.mp4) · [English video](video/iso-ai-en.mp4). Dos versiones de 56 segundos, sin audio, con la marca oficial: relación entre las dos normas, cláusulas 4 a 10 y Anexo A de 42001, amenazas de 27090 por fase del ciclo de vida, camino de cuatro semanas, estados de evidencia y portadas v0.4. Todo el texto sale del contenido de la guía. Integrados en Inicio, Investigaciones y la página de las guías; referencias ISO en Servicios. Fuente en `video/` (`build_video.py`).
+[Video español](video/iso-ai-es.mp4) · [English video](video/iso-ai-en.mp4). Dos versiones de 44 segundos, sin audio, en el estilo plano de NullGhost Research: relación entre las dos normas, cláusulas 4 a 10 y Anexo A de 42001, amenazas de 27090 por fase del ciclo de vida, camino de cuatro semanas y estados de evidencia. Todo el texto sale del contenido de la guía. Integrados en Investigaciones y en la página de las guías. Fuente en `video/` (`build_iso_flat.py`; el `build_video.py` premium anterior queda como histórico).
 
 ## Research guide and good-practice manual
 

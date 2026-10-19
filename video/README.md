@@ -1,6 +1,6 @@
 # Video de la guía y el manual de IA de NullGhost
 
-Dos versiones de 56 segundos, 1920 × 1080, 30 fps, H.264 y sin audio. Identidad oficial de NullGhost; portadas españolas v0.4 en ambas versiones.
+Dos versiones de 44 segundos, 1920 × 1080, 30 fps, H.264 y sin audio, en el estilo plano de los videos de NullGhost Research (barra superior, titulares a la izquierda, tarjetas de borde fino, números y fuente al pie). Fuente: `build_iso_flat.py`.
 
 - [Español](iso-ai-es.mp4)
 - [English](iso-ai-en.mp4)
