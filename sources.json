@@ -5,26 +5,50 @@
     {
       "id": "1",
       "title": "ISO/IEC 42001:2023",
-      "review_scope": "Ficha oficial. Alcance y edición; diciembre de 2023. Texto íntegro no revisado.",
+      "review_scope": "[S] Ficha oficial: requisitos para un sistema de gestión de IA; publicada en diciembre de 2023. Texto íntegro no revisado.",
       "url": "https://www.iso.org/standard/42001"
     },
     {
       "id": "2",
       "title": "ISO/IEC 27090:2026",
-      "review_scope": "Ficha oficial y ciclo de vida. Publicación: 14 de octubre de 2026. Texto íntegro no revisado.",
+      "review_scope": "[S] Ficha oficial. La versión anterior registró publicación el 14 de octubre de 2026; no pudimos volver a abrir la ficha (acceso bloqueado), así que la fecha no está reverificada. Texto íntegro no revisado.",
       "url": "https://www.iso.org/standard/27090"
     },
     {
       "id": "3",
-      "title": "NIST AI 100-2e2025",
-      "review_scope": "Vassilev et al., marzo de 2025. Secciones 3.4 y 3.5 sobre inyección indirecta y agentes; lectura selectiva.",
-      "url": "https://doi.org/10.6028/NIST.AI.100-2e2025"
+      "title": "ISO27k Forum (IsecT): ISO/IEC 27090",
+      "review_scope": "[S] Descripción del alcance y de las amenazas que cubre (envenenamiento, inversión y robo de modelos, entre otras) y aviso de publicación.",
+      "url": "https://www.iso27001security.com/html/27090"
     },
     {
       "id": "4",
-      "title": "NIST AI Risk Management Framework",
-      "review_scope": "Página oficial y descripción de AI RMF 1.0; no se realizó un cruce completo con el marco.",
-      "url": "https://www.nist.gov/itl/ai-risk-management-framework"
+      "title": "Estructura de ISO/IEC 42001 (cláusulas y Anexo A)",
+      "review_scope": "[S] Cláusulas 4 a 10, evaluación de impacto (6.1.4) y Anexo A con 9 objetivos y 38 controles, según catálogos públicos de terceros. Verificar contra la norma.",
+      "url": "https://riskprofs.com/iso-42001-annex-a-controls-list/"
+    },
+    {
+      "id": "5",
+      "title": "NIST AI 100-2e2025",
+      "review_scope": "[P] Vassilev et al., marzo de 2025. Índice leído: 3.4 inyección indirecta de prompts; 3.5 seguridad de agentes. Resto, lectura selectiva.",
+      "url": "https://doi.org/10.6028/NIST.AI.100-2e2025"
+    },
+    {
+      "id": "6",
+      "title": "OWASP Top 10 for LLM Applications 2025",
+      "review_scope": "[S] OWASP GenAI Security Project, noviembre de 2024. Lista LLM01 a LLM10 según cobertura de terceros.",
+      "url": "https://genai.owasp.org"
+    },
+    {
+      "id": "7",
+      "title": "MITRE ATLAS",
+      "review_scope": "[S] Base de conocimiento de tácticas y técnicas contra sistemas de IA, modelada sobre ATT&CK, con casos documentados.",
+      "url": "https://atlas.mitre.org"
+    },
+    {
+      "id": "8",
+      "title": "Dunlosky et al. (2013)",
+      "review_scope": "[S] Improving Students' Learning With Effective Learning Techniques. Psychological Science in the Public Interest. DOI 10.1177/1529100612453266.",
+      "url": "https://doi.org/10.1177/1529100612453266"
     }
   ]
 }

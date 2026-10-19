@@ -8,7 +8,7 @@ from reportlab.lib.styles import ParagraphStyle
 from reportlab.platypus import Paragraph, Table, TableStyle
 from reportlab.pdfbase import pdfmetrics
 from reportlab.pdfbase.ttfonts import TTFont
-from content import RESEARCH_GUIDE, MANUAL, SOURCES
+from content import RESEARCH_GUIDE, MANUAL, SOURCES, VERSION, DATE_LABEL
 from svglib.svglib import svg2rlg
 from reportlab.graphics import renderPDF
 import math,sys
@@ -29,6 +29,7 @@ styles={
  'cell':ParagraphStyle('cell',fontName='Body',fontSize=9,leading=12.6,textColor=INK),
  'th':ParagraphStyle('th',fontName='Strong',fontSize=8.6,leading=12,textColor=white),
  'callout':ParagraphStyle('callout',fontName='Body',fontSize=11,leading=16,textColor=INK),
+ 'srctitle':ParagraphStyle('srctitle',fontName='Strong',fontSize=10.5,leading=14,textColor=INK),
  'white':ParagraphStyle('white',fontName='Body',fontSize=15,leading=22,textColor=HexColor('#C3D8EE'))}
 
 def para(c,text,x,y,width=CW,style='body'):
@@ -54,16 +55,16 @@ def cover(c,d,total):
  y-=14;y=para(c,d['subtitle'],M,y,CW-25,'white')
  y-=24;c.setStrokeColor(HexColor('#26384C'));c.line(M,y,W-M,y)
  y-=22
- c.setFillColor(CYAN);c.setFont('Strong',9);c.drawString(M,y,'ISO/IEC 42001:2023  +  ISO/IEC 27090:2026')
+ c.setFillColor(CYAN);c.setFont('Strong',9);c.drawString(M,y,d['cover_iso'])
  para(c,d['cover_note'],M,y-24,CW-10,'white')
  brand_asset(c,'nullghost-symbol-reverse.svg',W-235,144,190)
  c.setFillColor(CYAN);c.setFont('Strong',9);c.drawString(M,273,'UNA RUTA DE TRABAJO')
  c.setFillColor(HexColor('#C3D8EE'));c.setFont('Body',11)
- labels=['Definir el alcance','Investigar con fuentes','Conservar y revisar evidencia'] if d is RESEARCH_GUIDE else ['Asignar responsables','Aplicar prácticas verificables','Revisar antes de publicar']
+ labels=d['cover_steps']
  for i,line in enumerate(labels):c.drawString(M,249-i*23,f'{i+1:02d}  '+line)
  c.setStrokeColor(HexColor('#26384C'));c.line(M,117,W-M,117)
  c.setFillColor(HexColor('#A5B6C9'));c.setFont('Body',10);c.drawString(M,91,'Ricardo Martínez · NullGhost')
- c.setFont('Body',9);c.drawString(M,70,'19 OCT 2026   /   v0.2 · VERSIÓN DE TRABAJO')
+ c.setFont('Body',9);c.drawString(M,70,DATE_LABEL+'   /   '+VERSION+' · VERSIÓN DE TRABAJO')
  c.setFillColor(CYAN);c.drawRightString(W-M,70,f'{total:02d} PÁGINAS')
  c.bookmarkPage('cover');c.addOutlineEntry('Portada','cover');c.showPage()
 
@@ -71,7 +72,7 @@ def chrome(c,d,n,total,num,title):
  c.setFillColor(PAPERBG);c.rect(0,0,W,H,fill=1,stroke=0)
  c.setFillColor(BLUE);c.rect(0,H-6,W,6,fill=1,stroke=0)
  wordmark(c,M,H-52)
- c.setFillColor(MUTED);c.setFont('Body',8);c.drawRightString(W-M,H-46,('GUÍA DE INVESTIGACIÓN' if d is RESEARCH_GUIDE else 'BUENAS PRÁCTICAS')+'   ·   v0.2')
+ c.setFillColor(MUTED);c.setFont('Body',8);c.drawRightString(W-M,H-46,('GUÍA DE INVESTIGACIÓN' if d is RESEARCH_GUIDE else 'BUENAS PRÁCTICAS')+'   ·   '+VERSION)
  c.setStrokeColor(LINE);c.line(M,47,W-M,47)
  c.setFillColor(MUTED);c.setFont('Body',8);c.drawString(M,31,'NullGhost · '+('Guía de investigación' if d is RESEARCH_GUIDE else 'Manual de buenas prácticas'))
  c.setFont('Strong',9);c.drawRightString(W-M,31,f'{n:02d} / {total:02d}')
@@ -101,6 +102,18 @@ def architecture(c,y):
  c.setFillColor(HexColor('#AAC3DD'));c.setFont('Body',8.5);c.drawString(M+18,y-133,'Revisión humana: contexto, resultado, límites y decisión de publicación.')
  return y-h-18
 
+def relation(c,y):
+ h=150;c.setFillColor(NAVY);c.roundRect(M,y-h,CW,h,9,fill=1,stroke=0)
+ boxes=[('ISO/IEC 42001','Gobernar: política, roles,','riesgo, impacto y mejora'),('ISO/IEC 27090','Proteger: amenazas a la IA','en todo su ciclo de vida'),('ISO/IEC 27001 / 27002','Seguridad de la información','de la organización')]
+ bw=(CW-28-2*12)/3;x0=M+14
+ for i,(t,a,b) in enumerate(boxes):
+  xx=x0+i*(bw+12);c.setStrokeColor(HexColor('#3C6085'));c.setFillColor(HexColor('#122942'));c.roundRect(xx,y-88,bw,66,5,fill=1,stroke=1)
+  c.setFillColor(white);c.setFont('Strong',9.5);c.drawCentredString(xx+bw/2,y-42,t)
+  c.setFillColor(HexColor('#AAC3DD'));c.setFont('Body',8.2);c.drawCentredString(xx+bw/2,y-58,a);c.drawCentredString(xx+bw/2,y-70,b)
+ c.setStrokeColor(HexColor('#3C6085'));c.setDash(3,3);c.line(M+18,y-104,W-M-18,y-104);c.setDash()
+ c.setFillColor(CYAN);c.setFont('Body',8.6);c.drawCentredString(W/2,y-124,'Vocabulario abierto para estudiar: NIST AI 100-2  ·  OWASP Top 10 para LLM  ·  MITRE ATLAS')
+ return y-h-18
+
 def blocks(c,items,y):
  for b in items:
   typ=b[0]
@@ -108,6 +121,7 @@ def blocks(c,items,y):
   elif typ=='heading':y=para(c,b[1],M,y-3,style='heading')-8
   elif typ=='table':y=table(c,b[1],b[2],y)
   elif typ=='diagram':y=architecture(c,y)
+  elif typ=='relation':y=relation(c,y)
   elif typ=='callout':
    p=Paragraph(escape(b[2]),styles['callout']);_,h=p.wrap(CW-30,900);height=h+45
    c.setFillColor(HexColor('#E8F2FF'));c.roundRect(M,y-height,CW,height,6,fill=1,stroke=0);c.setFillColor(BLUE);c.rect(M,y-height,3,height,fill=1,stroke=0);c.setFont('Strong',8.5);c.drawString(M+15,y-18,b[1]);p.drawOn(c,M+15,y-33-h);y-=height+18
@@ -121,14 +135,14 @@ def blocks(c,items,y):
    y-=hh+16
   elif typ=='sources':
    for ident,title,note,url in SOURCES:
-    y=para(c,f'[{ident}] {title}',M,y,style='heading')-3;y=para(c,note,M,y,style='small')-5
-    link=Paragraph(f'<link href="{url}" color="#1557A6">{escape(url)}</link>',styles['small']);_,hh=link.wrap(CW,200);link.drawOn(c,M,y-hh);y-=hh+15
-   y=para(c,'Consulta de fuentes: 19 de octubre de 2026. No se redistribuyen las normas.',M,y,style='small')-15
+    y=para(c,f'[{ident}] {title}',M,y,style='srctitle')-2;y=para(c,note,M,y,style='small')-3
+    link=Paragraph(f'<link href="{url}" color="#1557A6">{escape(url)}</link>',styles['small']);_,hh=link.wrap(CW,200);link.drawOn(c,M,y-hh);y-=hh+11
+   y-=4
   if y<67:raise RuntimeError(f'Page overflow: y={y:.1f}, block={typ}')
  return y
 
 def markdown(d):
- lines=['# '+d['title'].replace('\n',' '),'',d['subtitle'],'','> v0.2 · Versión de trabajo · 19 de octubre de 2026','',d['cover_note'],'']
+ lines=['# '+d['title'].replace('\n',' '),'',d['subtitle'],'','> '+VERSION+' · Versión de trabajo · 19 de octubre de 2026','',d['cover_note'],'']
  for num,title,items in d['pages']:
   lines+=['## '+num+' · '+title,'']
   for b in items:
@@ -139,13 +153,14 @@ def markdown(d):
    elif b[0]=='steps':lines += [f'{i}. **{t}.** {v}' for i,(t,v) in enumerate(b[1],1)]+['']
    elif b[0]=='code':lines+=['```json',b[1],'```','']
    elif b[0]=='diagram':lines+=['Operador → Política de alcance → MCP / VM → Evidencia. Revisión humana transversal.','']
+   elif b[0]=='relation':lines+=['ISO/IEC 42001 (gobernar) · ISO/IEC 27090 (proteger) · ISO/IEC 27001/27002 (seguridad de la información). Vocabulario abierto: NIST AI 100-2, OWASP Top 10 para LLM, MITRE ATLAS.','']
    elif b[0]=='sources':lines += [f'[{i}] [{t}]({u}). {n}' for i,t,n,u in SOURCES]+['']
  return '\n'.join(lines)
 
 def build(d):
  path=ROOT/d['directory']/d['filename'];path.parent.mkdir(parents=True,exist_ok=True);total=len(d['pages'])+1
  c=canvas.Canvas(str(path),pagesize=(W,H),pageCompression=1,invariant=1)
- c.setTitle(d['title'].replace('\n',' '));c.setAuthor('Ricardo Martínez / NullGhost Research');c.setSubject('Guía y manual de trabajo v0.2; sin conformidad demostrada')
+ c.setTitle(d['title'].replace('\n',' '));c.setAuthor('Ricardo Martínez / NullGhost Research');c.setSubject('Guía y manual de trabajo '+VERSION+'; sin conformidad demostrada')
  cover(c,d,total)
  for i,(num,title,items) in enumerate(d['pages'],2):
   y=chrome(c,d,i,total,num,title);last=blocks(c,items,y);print(d['filename'],i,'bottom',round(last));c.showPage()

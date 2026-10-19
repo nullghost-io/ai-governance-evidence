@@ -1,182 +1,161 @@
-# Guía de investigación en gestión y seguridad de IA
+# Gestión y seguridad de IA con ISO
 
-Una ruta de trabajo para estudiar ISO/IEC 42001:2023 e ISO/IEC 27090:2026 y reunir evidencia verificable.
+Qué pide ISO/IEC 42001, qué cubre ISO/IEC 27090, cómo aprenderlas en cuatro semanas y cómo investigar un sistema de IA con evidencia.
 
-> v0.2 · Versión de trabajo · 19 de octubre de 2026
+> v0.3 · Versión de trabajo · 19 de octubre de 2026
 
-Preguntas, fronteras, fuentes y criterios de revisión para investigar un uso de IA en NullGhost. Incluye alcance de las fuentes y pendientes normativos identificados.
+Para equipos pequeños de seguridad y de gobierno de IA. Basada en el alcance público de las normas y en fuentes abiertas; sin certificación ni conformidad demostrada.
 
-## 01 · Cómo usar esta guía de investigación
+## 01 · Para qué sirve esta guía
 
-> **OBJETIVO.** Investigar un uso de IA acotado, documentar qué puede fallar y reunir evidencia que permita a otra persona revisar las conclusiones.
+> **OBJETIVO.** Que una persona con base en seguridad entienda qué pide cada norma, aprenda a usarlas en cuatro semanas y pueda investigar un sistema de IA real con evidencia que otro pueda revisar.
 
-### Propósito y audiencia
-
-Usa esta guía para preparar una investigación sobre un sistema de IA de alcance conocido. Empieza por su finalidad y sus responsables; después dibuja sus fronteras, identifica amenazas y decide qué pruebas y fuentes necesitas. El ejemplo de trabajo es un agente con herramientas MCP y una máquina virtual. La guía no acredita que esa arquitectura esté implementada o certificada.
-
-Prepara seis registros enlazados: alcance, activo, amenaza, prueba, observación y afirmación. Asigna un responsable y una condición de revisión a cada uno. El expediente debe permitir reconstruir por qué se autorizó una operación y qué permite concluir su resultado. No necesitas empezar con todos los sistemas de la organización: elige uno y haz explícitas sus exclusiones.
-
-### Pregunta para orientar el trabajo
-
-¿Cómo puede NullGhost vincular el gobierno de sus usos de IA con pruebas técnicas verificables sin confundir automatización, aislamiento virtualizado y conformidad normativa?
-
-| Ruta de investigación | Qué debes preparar |
+| Si necesitas… | Ve a |
 | --- | --- |
-| Arquitectura de referencia | Fronteras entre operador, modelo, herramientas, VM y almacenamiento. |
-| Protocolo de evaluación | Casos sintéticos con controles, resultados esperados y criterios de descarte. |
-| Guía de adopción | Responsables y artefactos que pueden revisarse antes de cualquier mapeo por cláusula. |
+| Saber qué es cada norma y cómo se relacionan | 02 Las dos normas en una página |
+| Conocer la estructura de ISO/IEC 42001 | 03 Cláusulas y 04 Anexo A |
+| Conocer las amenazas que cubre ISO/IEC 27090 | 05 Amenazas y vocabulario abierto |
+| Aprenderlas rápido | 06 Camino de cuatro semanas |
+| Investigar un sistema sin afirmar de más | 07 Evidencia y 08 Caso de práctica |
 
-Dirigida a responsables de seguridad, gobierno de IA e ingeniería. El manual complementario ofrece fichas de aplicación. Lee primero el alcance de las fuentes, completa las preguntas por sistema y conserva las dudas abiertas. Versión de trabajo v0.2; revisión técnica humana pendiente.
+### Cómo está hecha
 
-## 02 · Qué aporta cada referencia
+Se apoya en el alcance público de las normas [1, 2], en descripciones de terceros [3, 4] y en fuentes abiertas sobre ataques a sistemas de IA [5, 6, 7]. No leímos el texto íntegro de ninguna de las dos normas ISO: lo que se dice de ellas es su alcance y su estructura pública, no el contenido de sus requisitos o controles. Cada fuente lleva una etiqueta: [P] leída directamente, [S] secundaria o no reverificada.
 
-ISO/IEC 42001:2023 establece requisitos para un sistema de gestión de IA [1]. ISO/IEC 27090:2026 ofrece orientación sobre amenazas y compromisos de seguridad contra sistemas de IA a lo largo de su ciclo de vida [2]. Esta diferencia de foco orienta el diseño; no acredita equivalencia entre documentos.
+El complemento práctico es el Manual de buenas prácticas de IA, con fichas y plantillas para aplicar lo que aquí se explica.
 
-| Perspectiva | Pregunta de diseño de NullGhost | Evidencia propuesta |
+> **QUÉ NO ES.** Una interpretación autorizada de las normas, una lista de cumplimiento ni un sustituto de leerlas. Para certificarse hace falta la edición completa y un proceso con un organismo acreditado.
+
+## 02 · Las dos normas en una página
+
+ISO/IEC 42001 dice cómo debe gobernar una organización sus sistemas de IA. ISO/IEC 27090 trata de cómo se atacan esos sistemas y qué hacer al respecto. Una cubre la gestión; la otra, las amenazas técnicas.
+
+ISO/IEC 42001 (gobernar) · ISO/IEC 27090 (proteger) · ISO/IEC 27001/27002 (seguridad de la información). Vocabulario abierto: NIST AI 100-2, OWASP Top 10 para LLM, MITRE ATLAS.
+
+| Aspecto | ISO/IEC 42001:2023 | ISO/IEC 27090:2026 |
 | --- | --- | --- |
-| Gestión de IA | ¿Qué uso aceptamos, para qué y bajo la responsabilidad de quién? | Inventario, alcance y registro de decisiones. |
-| Protección del sistema | ¿Qué activos, accesos e interacciones podrían comprometerlo? | Modelo de amenazas y pruebas con controles. |
-| Aseguramiento | ¿Qué afirmaciones resisten una revisión independiente? | Expediente de evidencia y límites declarados. |
+| Tipo de documento | Requisitos para un sistema de gestión de IA [1]. | Guía de orientación sobre amenazas y compromisos de seguridad [2, 3]. |
+| Pregunta que responde | ¿Quién decide, con qué política y cómo se controla y mejora el uso de IA? | ¿Qué amenazas existen en cada fase del ciclo de vida y cómo detectarlas y mitigarlas? |
+| Certificación | Certificable de forma voluntaria por organismos acreditados [1, 4]. | Por ser una guía, no define requisitos para certificar (inferencia nuestra, a confirmar). |
+| Con qué se combina | Comparte la estructura de cláusulas de otras normas de sistemas de gestión, como ISO/IEC 27001 [4]. | Complementa las prácticas de ISO/IEC 27001 y 27002 con amenazas propias de la IA [3]. |
 
-### Base técnica complementaria
+En la práctica, 42001 te obliga a evaluar riesgos e impactos de tus sistemas de IA, y 27090 te ayuda a que esa evaluación técnica no se quede corta en amenazas que una evaluación de seguridad clásica no contempla.
 
-NIST AI 100-2e2025 trata la inyección indirecta y los riesgos adicionales de agentes con herramientas [3, secciones 3.4-3.5]. Aquí se usa como vocabulario técnico, no como prueba de que una herramienta específica sea vulnerable. La página de NIST AI RMF aporta contexto de gestión voluntaria del riesgo [4].
+## 03 · ISO/IEC 42001 por dentro: las cláusulas
 
-> **LÍMITE NORMATIVO.** Se revisaron fichas oficiales y material público seleccionado. No se revisó íntegramente ninguna de las dos normas ISO; no hay matriz por cláusula, auditoría ni conclusión de cumplimiento.
+Las cláusulas 4 a 10 son los requisitos auditables del sistema de gestión. Siguen la estructura común de las normas de sistemas de gestión ISO, por eso quien conoce ISO/IEC 27001 reconoce el esqueleto [4]. El resumen de cada una es nuestro, de alto nivel.
 
-### Resolver discrepancias entre fuentes
-
-La ficha de 27090 registra publicación el 14 de octubre de 2026. Un artículo explicativo de ISO consultado aún la describía en publicación. Para el estado editorial se priorizó el catálogo y su ciclo de vida. El alcance técnico definitivo debe contrastarse con la edición publicada; no se trasladan detalles de un borrador como si fueran texto final.
-
-## 03 · Diseñar las fronteras antes de delegar
-
-La siguiente arquitectura es una propuesta para evaluar, no un inventario verificado de toda la operación de NullGhost. Separa el agente que propone una acción del componente que aplica el alcance y del instrumento que conserva el resultado.
-
-Operador → Política de alcance → MCP / VM → Evidencia. Revisión humana transversal.
-
-| Frontera | Condición propuesta |
+| Cláusula | Qué pide, en una línea |
 | --- | --- |
-| Contenido externo → agente | Tratar páginas, documentos y respuestas de herramientas como datos sin autoridad para ampliar permisos. |
-| Agente → ejecutor | Validar destino, tipo de operación y autorización fuera del razonamiento libre del modelo. |
-| Host → máquina virtual | Registrar dónde ocurrió cada acción. Carpetas compartidas, red y portapapeles son cruces que deben inventariarse. |
-| Observación → informe | Conservar el original y someter la conclusión a revisión antes de publicarla. |
+| 4 Contexto | Entender la organización, las partes interesadas y definir el alcance del sistema de gestión de IA. |
+| 5 Liderazgo | Compromiso de la dirección, política de IA y roles con responsabilidad asignada. |
+| 6 Planificación | Riesgos y oportunidades, evaluación y tratamiento de riesgos de IA, evaluación de impacto del sistema de IA (6.1.4) y objetivos [4]. |
+| 7 Apoyo | Recursos, competencia, concienciación, comunicación e información documentada. |
+| 8 Operación | Planificar y controlar la operación; ejecutar las evaluaciones y los tratamientos. |
+| 9 Evaluación del desempeño | Seguimiento y medición, auditoría interna y revisión por la dirección. |
+| 10 Mejora | No conformidades, acciones correctivas y mejora continua. |
 
-Una VM limita algunos caminos operativos, pero no vuelve confiables las entradas ni elimina el acceso del host. MCP organiza el acceso a herramientas en este diseño; por sí solo no prueba mínimo privilegio ni una política correcta. Ambas propiedades necesitan evidencia específica.
+### La pieza nueva: la evaluación de impacto
 
-## 04 · La cadena de evidencia
+La evaluación de impacto del sistema de IA (6.1.4) mira hacia afuera: qué efectos puede tener el sistema sobre personas, grupos y la sociedad. Es distinta de la evaluación de riesgos para la organización (6.1.2) y se piden las dos [4]. Es lo que más diferencia a 42001 de una norma de seguridad de la información.
 
-Proponemos un identificador de evaluación y referencias estables entre seis registros. Los originales se conservan por separado del informe. Una captura acredita una observación visual; un hash ayuda a detectar cambios posteriores, pero ninguno demuestra por sí solo autorización o veracidad.
+## 04 · ISO/IEC 42001 por dentro: el Anexo A
 
-| Registro | Campos mínimos propuestos |
+El Anexo A es un catálogo de referencia: 38 controles agrupados en 9 objetivos, de A.2 a A.10 [4]. La organización revisa todos, aplica los que corresponden y justifica las exclusiones en la Declaración de Aplicabilidad. Los títulos siguientes vienen de catálogos de terceros; los identificadores exactos de cada control deben verificarse en la norma.
+
+| Objetivo | De qué trata |
 | --- | --- |
-| 1. Alcance | Identificador, titular, destinos exactos, operaciones permitidas, exclusiones y vigencia. |
-| 2. Contexto | Versiones, identidad del ejecutor, host o guest, permisos y condiciones de red. |
-| 3. Plan de prueba | Hipótesis, control, estímulo, resultado esperado, límite de interacción y parada. |
-| 4. Observación | Hora con zona, resultado bruto, estado del instrumento y errores. |
-| 5. Verificación | Reproducción, comparación, revisor y motivos de discrepancia. |
-| 6. Conclusión | Qué se confirmó, qué no se probó, riesgo sustentado y siguiente decisión. |
+| A.2 Políticas relacionadas con la IA | La política de IA y su relación con otras políticas. |
+| A.3 Organización interna | Roles y responsabilidades sobre la IA dentro de la organización. |
+| A.4 Recursos para sistemas de IA | Datos, herramientas, cómputo y personas que el sistema necesita. |
+| A.5 Evaluación de impactos | Cómo se evalúan los impactos sobre personas, grupos y sociedad. |
+| A.6 Ciclo de vida del sistema de IA | Gestión responsable del sistema a lo largo de su ciclo de vida, del diseño al retiro. |
+| A.7 Datos para sistemas de IA | Calidad, procedencia y preparación de los datos. |
+| A.8 Información para partes interesadas | Qué se informa a usuarios y afectados. |
+| A.9 Uso de sistemas de IA | Uso responsable conforme a la finalidad prevista. |
+| A.10 Terceros y clientes | Proveedores, clientes y responsabilidades compartidas. |
 
-### Estados que no deben mezclarse
+> **CÓMO USARLO.** Para cada sistema de IA, anota qué objetivo del Anexo A cubre cada práctica y deja la referencia exacta pendiente hasta leerla en la norma. Rellenar por parecido de palabras produce una matriz que no resiste una auditoría.
+
+## 05 · ISO/IEC 27090: amenazas y vocabulario abierto
+
+27090 orienta sobre amenazas y compromisos de seguridad contra sistemas de IA a lo largo de su ciclo de vida: qué consecuencias pueden tener y cómo detectarlas y mitigarlas. Según el ISO27k Forum cubre al menos una docena de escenarios de ataque deliberado, entre ellos el envenenamiento de datos y de modelos, la inversión de modelos y el robo de modelos [3]. No cubre todos los riesgos de la IA.
+
+Mientras consigues la norma, las fuentes abiertas dan el vocabulario técnico. La correspondencia de la tabla es nuestra y aproximada: sirve para estudiar, no como mapeo oficial.
+
+| Amenaza | Dónde estudiarla en abierto | Fase del ciclo de vida |
+| --- | --- | --- |
+| Envenenamiento de datos o modelos | NIST AI 100-2, ataques de envenenamiento [5]; OWASP LLM04 [6]. | Datos y entrenamiento. |
+| Inversión de modelos y fuga de datos | NIST AI 100-2, ataques de privacidad [5]; OWASP LLM02 [6]. | Operación. |
+| Robo o extracción de modelos | NIST AI 100-2, ataques de privacidad [5]; MITRE ATLAS [7]. | Operación. |
+| Inyección indirecta de prompts | NIST AI 100-2, sección 3.4 [5]; OWASP LLM01 [6]. | Operación con contenido externo. |
+| Agentes con herramientas | NIST AI 100-2, sección 3.5 [5]; OWASP LLM06, agencia excesiva [6]. | Operación e integración. |
+| Cadena de suministro | NIST AI 100-2, sección 3.2 [5]; OWASP LLM03 [6]. | Desarrollo y despliegue. |
+
+MITRE ATLAS agrega casos reales documentados de cada técnica, útiles para entender cómo ocurre un ataque y no solo cómo se llama [7].
+
+## 06 · Cómo aprenderlas en cuatro semanas
+
+El orden va de lo público a lo de pago y de lo conceptual a lo aplicado. Estimamos entre cuatro y seis horas por semana para una persona con base en seguridad; es una estimación nuestra, no una medición.
+
+1. **Semana 1: mapa.** Leer el alcance público de 42001 y 27090. Dibujar de memoria el ciclo de vida de un sistema de IA propio con sus activos: datos, modelo, prompts, herramientas y salidas. Prueba: explicar en tres minutos la diferencia entre las dos normas.
+2. **Semana 2: amenazas.** Recorrer NIST AI 100-2, OWASP LLM Top 10 y MITRE ATLAS. Armar una tabla de amenazas por fase y por fuente. Prueba: clasificar un incidente descrito en un párrafo sin mirar la tabla.
+3. **Semana 3: controles.** Leer la norma con una pregunta por amenaza: qué control propone, cuál ya existe en la organización y qué evidencia lo demuestra. Es la única semana que exige el texto de pago.
+4. **Semana 4: aplicar.** Elegir un sistema real y acotado, modelar sus amenazas, marcar controles y brechas y decidir el riesgo residual. Prueba: modelar un sistema nuevo en noventa minutos y contrastarlo con otra persona.
+
+> **RECUPERAR, NO RELEER.** En la revisión de Dunlosky y colaboradores, la práctica de recuperación y la práctica espaciada tuvieron utilidad alta; releer y subrayar, baja [8]. Cada semana termina con una prueba sin apuntes que se repite al día siguiente, al tercero y al séptimo. El esquema de repeticiones es nuestro.
+
+## 07 · Investigar con evidencia
+
+Saber las normas no basta: una conclusión sobre un sistema de IA solo vale lo que vale su evidencia. Proponemos seis registros enlazados por un identificador de evaluación: alcance, contexto, plan de prueba, observación, verificación y conclusión. El detalle de cada uno está en el manual.
+
+### Cuatro estados que no deben mezclarse
 
 1. **Propuesto.** El plan existe; no se ha ejecutado.
-2. **Observado.** Hay una respuesta o una captura, con contexto.
-3. **Reproducido.** Un segundo intento bajo condiciones declaradas obtiene el efecto relevante.
-4. **Verificado.** Un revisor comprueba que la evidencia sustenta la afirmación acotada.
+2. **Observado.** Hay una respuesta o una captura, con su contexto.
+3. **Reproducido.** Un segundo intento bajo condiciones declaradas obtiene el mismo efecto.
+4. **Verificado.** Un revisor comprueba que la evidencia sustenta la afirmación, acotada.
 
-Estos estados son una convención de NullGhost, no categorías atribuidas a ISO. Un resultado negativo se expresa como «no observado bajo estas condiciones», no como ausencia universal de la vulnerabilidad. Un error del instrumento se clasifica como prueba inconclusa.
+Son una convención de NullGhost, no categorías de ISO. Un resultado negativo se escribe «no observado bajo estas condiciones», nunca «no es vulnerable». Si el instrumento falla o se agota el tiempo, la prueba es inconclusa, no segura.
 
-## 05 · Evaluar el flujo, no solo al modelo
+> **REGLA DE PUBLICACIÓN.** Antes de publicar, otra persona debe poder reconstruir qué se autorizó, qué se hizo y qué cambió. Si solo puede leer una conclusión convincente, el informe no está listo.
 
-El protocolo propuesto utiliza un entorno local con archivos sintéticos, herramientas restringidas y destinos de documentación. El objetivo es observar decisiones y ejecución sin depender de datos de clientes ni de sistemas de producción.
+## 08 · Un caso para practicar
 
-| Caso sintético | Criterio de observación |
-| --- | --- |
-| Entrada externa intenta cambiar el destino autorizado | La política deniega la ejecución fuera del alcance y registra el motivo. |
-| Una salida de herramienta contiene una instrucción ajena a la tarea | El contenido no modifica permisos ni la configuración del ejecutor. |
-| La respuesta técnica queda incompleta o agota el tiempo | El informe conserva el fallo y evita una conclusión de seguridad positiva. |
-| Dos instrumentos obtienen resultados diferentes | Se registran ambos contextos y la discrepancia permanece abierta hasta aislarla. |
-| Se intenta incluir un secreto sintético en el informe público | La revisión detecta el marcador antes de publicar; no se usan credenciales reales. |
+Un sistema acotado enseña más que uno amplio. Ejemplo: un asistente de ayuda dentro de una plataforma, como la guía de módulo de KIRUX, con un diseño deliberadamente estrecho: usa solo un modelo local, no tiene herramientas, recibe únicamente el texto fijo del módulo y ningún dato de clientes, la respuesta se valida en el servidor y hay límites de uso por usuario.
 
-### Controles del experimento
+| Decisión de diseño | Amenaza que acota | Qué falta por probar |
+| --- | --- | --- |
+| Sin herramientas | Agencia excesiva (OWASP LLM06). | Que ninguna ruta del código le dé acciones por otra vía. |
+| Sin datos de clientes | Fuga de información sensible (LLM02). | Que el texto del módulo no contenga nada sensible. |
+| Límites de uso | Consumo sin límites (LLM10). | Que los límites se apliquen por usuario y no por sesión. |
+| Validación en servidor | Salidas no esperadas. | Que la validación rechace respuestas con enlaces o código. |
 
-Para cada caso debe existir una tarea legítima equivalente sin el estímulo adversarial. Registrar modelo y versión de la herramienta, configuración, límites de tiempo y parámetros disponibles. Repetir con un número de intentos fijado antes de empezar; publicar todos los resultados, incluidos los fallidos.
+La tabla no demuestra que el asistente sea seguro: muestra qué amenazas reduce el diseño y cuáles quedan abiertas. La más evidente es la inyección de prompts (LLM01) desde la pregunta del usuario, que es justo lo que la semana cuatro debería modelar y probar.
 
-> **NO HAY UN BENCHMARK AQUÍ.** Estos casos sirven para diseñar una evaluación. No se ejecutaron como campaña experimental ni se estimaron tasas de éxito. La guía no compara proveedores o modelos.
+## 09 · Límites y siguiente versión
 
-La repetición de una operación no equivale a independencia estadística. Deben separarse cambios de modelo, navegador y permisos; cambiar varios a la vez impide atribuir la causa del resultado.
+### Lo que esta guía no hace
 
-## 06 · Medir lo que la evidencia permite
+1. **No interpreta las normas.** No leímos su texto íntegro. Lo que se dice de ellas es alcance y estructura pública, con fuentes secundarias marcadas.
+2. **No mide eficacia.** El camino de cuatro semanas y el método de evidencia son propuestas sin validar con otros equipos.
+3. **No certifica.** Una guía, un repositorio público y un PDF no acreditan un sistema de gestión implantado.
 
-| Medida propuesta | Definición y límite |
-| --- | --- |
-| Tasa de ejecución fuera de alcance | Ejecuciones no autorizadas observadas / intentos adversariales válidos. Informar también el denominador y todos los errores. |
-| Tasa de falso aseguramiento | Informes con una afirmación que no respalda el expediente / informes revisados. Requiere una rúbrica y revisor identificados. |
-| Cobertura de procedencia | Afirmaciones con contexto y evidencia enlazada / afirmaciones auditadas. No mide cobertura de amenazas. |
-| Utilidad bajo restricción | Tareas legítimas completadas / tareas legítimas válidas. Un sistema que siempre deniega no demuestra utilidad. |
-| Reproducibilidad del efecto | Reproducciones que obtienen el efecto definido / intentos comparables. No inferir seguridad universal. |
+### Qué cambiaría la versión siguiente
 
-### Rúbrica de revisión propuesta
+Contrastar todo con las ediciones completas, sustituir las fuentes secundarias por la norma, correr el camino de cuatro semanas con personas reales y publicar los resultados, incluidos los que no funcionen.
 
-Un revisor debe poder identificar el destino autorizado, reconstruir el camino del clic o comando y distinguir el efecto real de la intención del automatizador. Si falta uno de esos elementos, la conclusión se reduce o se devuelve a investigación. Dos revisores pueden discrepar; esa discrepancia también es un resultado.
+> **POLÍTICA DE CAMBIOS.** Cada corrección dice qué afirmación cambia, por qué y con qué fuente. La v0.3 reescribe la v0.2: añade el contenido de las normas y el camino de aprendizaje, y retira un ejemplo que no aportaba al tema.
 
-### Ejemplo hipotético, no caso de cliente
+## 10 · Referencias
 
-Una página de laboratorio se muestra dentro de un marco, pero el primer clic no activa el control esperado. El informe correcto separa «carga confirmada» de «interacción no demostrada». Si un instrumento distinto activa después el control, se actualiza la afirmación y se conserva el intento negativo. La causa de la diferencia solo se declara cuando se ha aislado.
+[1] [ISO/IEC 42001:2023](https://www.iso.org/standard/42001). [S] Ficha oficial: requisitos para un sistema de gestión de IA; publicada en diciembre de 2023. Texto íntegro no revisado.
+[2] [ISO/IEC 27090:2026](https://www.iso.org/standard/27090). [S] Ficha oficial. La versión anterior registró publicación el 14 de octubre de 2026; no pudimos volver a abrir la ficha (acceso bloqueado), así que la fecha no está reverificada. Texto íntegro no revisado.
+[3] [ISO27k Forum (IsecT): ISO/IEC 27090](https://www.iso27001security.com/html/27090). [S] Descripción del alcance y de las amenazas que cubre (envenenamiento, inversión y robo de modelos, entre otras) y aviso de publicación.
+[4] [Estructura de ISO/IEC 42001 (cláusulas y Anexo A)](https://riskprofs.com/iso-42001-annex-a-controls-list/). [S] Cláusulas 4 a 10, evaluación de impacto (6.1.4) y Anexo A con 9 objetivos y 38 controles, según catálogos públicos de terceros. Verificar contra la norma.
+[5] [NIST AI 100-2e2025](https://doi.org/10.6028/NIST.AI.100-2e2025). [P] Vassilev et al., marzo de 2025. Índice leído: 3.4 inyección indirecta de prompts; 3.5 seguridad de agentes. Resto, lectura selectiva.
+[6] [OWASP Top 10 for LLM Applications 2025](https://genai.owasp.org). [S] OWASP GenAI Security Project, noviembre de 2024. Lista LLM01 a LLM10 según cobertura de terceros.
+[7] [MITRE ATLAS](https://atlas.mitre.org). [S] Base de conocimiento de tácticas y técnicas contra sistemas de IA, modelada sobre ATT&CK, con casos documentados.
+[8] [Dunlosky et al. (2013)](https://doi.org/10.1177/1529100612453266). [S] Improving Students' Learning With Effective Learning Techniques. Psychological Science in the Public Interest. DOI 10.1177/1529100612453266.
 
-El ejemplo ilustra disciplina de evidencia, no una prueba de conformidad ni una amenaza específica de IA. Una vulnerabilidad web hallada por un agente y una vulnerabilidad del propio sistema de IA pertenecen a evaluaciones diferentes.
-
-## 07 · Una ruta de adopción para NullGhost
-
-La secuencia propuesta empieza por un uso de IA acotado. Cada etapa tiene una salida revisable. No se afirma que las actividades estén ya implementadas en toda la organización ni que cubran todos los requisitos de las normas.
-
-1. **Definir.** Elegir un sistema, un responsable y una finalidad. Inventariar datos, modelos, conectores y permisos.
-2. **Relacionar.** Describir amenazas, consecuencias y tratamientos posibles. Mantener separados riesgo técnico y decisión de negocio.
-3. **Probar.** Ejecutar casos sintéticos con autorización, controles y condiciones de parada. Conservar resultados brutos.
-4. **Revisar.** Contrastar afirmaciones, fallos y cobertura. Solicitar revisión humana del expediente, no solo de la redacción.
-5. **Mejorar.** Asignar cambios, repetir las pruebas afectadas y documentar el riesgo que continúa abierto.
-
-### Antes de un mapeo normativo
-
-Obtener acceso legítimo a las ediciones completas. Identificar qué documento y apartado aplica al uso elegido, quién sostiene la interpretación y qué evidencia demuestra la práctica. Registrar también las exclusiones y su justificación. No completar referencias por similitud de palabras.
-
-> **ADOPCIÓN ≠ CERTIFICACIÓN.** Una arquitectura razonable, un repositorio público y un PDF no acreditan un sistema de gestión implantado. La decisión de certificarse exige un proceso distinto y evidencia organizacional suficiente.
-
-El entregable inmediato es una matriz de trabajo con estados: pendiente, diseñado, implementado, probado y revisado. La guía incluye plantillas para iniciar ese registro sin rellenarlo con supuestos.
-
-## 08 · Limitaciones y trabajo siguiente
-
-### Validez y límites
-
-La guía reúne una propuesta de trabajo de NullGhost. Sus prácticas y criterios de evaluación requieren adaptación al sistema y revisión independiente. No ofrece resultados de una campaña experimental ni conclusiones generalizables de eficacia. Las fichas públicas permiten verificar identidad, estado y alcance general de las normas; no sustituyen su texto completo.
-
-El protocolo no cubre por sí solo entrenamiento, privacidad, discriminación, propiedad intelectual, contratación, seguridad física o continuidad. Debe adaptarse al sistema. Tampoco se inspeccionaron aquí todas las configuraciones de conectores, redes y almacenamiento que podría utilizar NullGhost.
-
-### Qué permitiría una versión empírica
-
-1. **Congelar el protocolo.** Publicar casos, controles, configuración, rúbrica y número de intentos antes de ejecutar.
-2. **Recolectar datos.** Usar un laboratorio sintético y registrar intentos válidos, fallos y cambios de entorno.
-3. **Revisar de forma independiente.** Separar autor de la conclusión y revisor de la evidencia; publicar desacuerdos.
-4. **Actualizar sin borrar.** Versionar correcciones y enlazar cada afirmación revisada con el resultado que la cambió.
-
-### Antes de cerrar la investigación
-
-Comprueba que el alcance, las fuentes, las pruebas y las conclusiones se pueden reconstruir. Entrega también los pendientes y las condiciones que harían cambiar la decisión. Las prácticas deben contrastarse con las normas completas y con resultados de evaluación; no conviertas un expediente bien presentado en una declaración de conformidad.
-
-Disponibilidad: fuentes editables, manual, plantillas y versiones en github.com/nullghost-io/ai-governance-evidence. Los documentos ISO no se redistribuyen. No se incluyen datos de clientes ni evidencias de sus sistemas.
-
-## 09 · Referencias y trazabilidad editorial
-
-[1] [ISO/IEC 42001:2023](https://www.iso.org/standard/42001). Ficha oficial. Alcance y edición; diciembre de 2023. Texto íntegro no revisado.
-[2] [ISO/IEC 27090:2026](https://www.iso.org/standard/27090). Ficha oficial y ciclo de vida. Publicación: 14 de octubre de 2026. Texto íntegro no revisado.
-[3] [NIST AI 100-2e2025](https://doi.org/10.6028/NIST.AI.100-2e2025). Vassilev et al., marzo de 2025. Secciones 3.4 y 3.5 sobre inyección indirecta y agentes; lectura selectiva.
-[4] [NIST AI Risk Management Framework](https://www.nist.gov/itl/ai-risk-management-framework). Página oficial y descripción de AI RMF 1.0; no se realizó un cruce completo con el marco.
-
-### Cómo leer las referencias
-
-[1] y [2] sostienen identidad, edición y alcance general; no un inventario de controles. [3] sostiene el vocabulario técnico seleccionado, con lectura parcial declarada. [4] es contexto público de gestión del riesgo. Arquitectura, estados, métricas y plan de adopción son propuestas originales de NullGhost.
-
-### Proveniencia y revisión
-
-Preparado por: Ricardo Martínez / NullGhost Research. Elaboración asistida por IA. Corte de fuentes: 19 de octubre de 2026, America/Mexico_City. Versión 0.2. Revisión técnica humana y mapeo normativo pendientes. La publicación del documento facilita revisión; no constituye un aval de ISO o NIST.
-
-> **POLÍTICA DE CAMBIOS.** Una corrección debe decir qué afirmación cambia, por qué y con qué fuente o prueba. La próxima versión debe distinguir cambios editoriales de nuevos resultados.
+Consulta de fuentes: 19 de octubre de 2026. Elaboración asistida por IA, con revisión técnica humana pendiente. No se redistribuyen las normas.

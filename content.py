@@ -1,193 +1,202 @@
-"""Contenido original, editable. Propuesta conceptual, no evaluación de conformidad."""
+"""Contenido original, editable. Guía y manual de trabajo; no es evaluación de conformidad."""
+VERSION = 'v0.3'
+DATE_LABEL = '19 OCT 2026'
+
+# Fuentes. Etiquetas: [P] primaria leída directamente; [S] secundaria o ficha no reverificada.
 SOURCES = [
- ('1','ISO/IEC 42001:2023','Ficha oficial. Alcance y edición; diciembre de 2023. Texto íntegro no revisado.','https://www.iso.org/standard/42001'),
- ('2','ISO/IEC 27090:2026','Ficha oficial y ciclo de vida. Publicación: 14 de octubre de 2026. Texto íntegro no revisado.','https://www.iso.org/standard/27090'),
- ('3','NIST AI 100-2e2025','Vassilev et al., marzo de 2025. Secciones 3.4 y 3.5 sobre inyección indirecta y agentes; lectura selectiva.','https://doi.org/10.6028/NIST.AI.100-2e2025'),
- ('4','NIST AI Risk Management Framework','Página oficial y descripción de AI RMF 1.0; no se realizó un cruce completo con el marco.','https://www.nist.gov/itl/ai-risk-management-framework')]
-# Blocks: paragraph, heading, callout, table, diagram, steps.
+ ('1','ISO/IEC 42001:2023','[S] Ficha oficial: requisitos para un sistema de gestión de IA; publicada en diciembre de 2023. Texto íntegro no revisado.','https://www.iso.org/standard/42001'),
+ ('2','ISO/IEC 27090:2026','[S] Ficha oficial. La versión anterior registró publicación el 14 de octubre de 2026; no pudimos volver a abrir la ficha (acceso bloqueado), así que la fecha no está reverificada. Texto íntegro no revisado.','https://www.iso.org/standard/27090'),
+ ('3','ISO27k Forum (IsecT): ISO/IEC 27090','[S] Descripción del alcance y de las amenazas que cubre (envenenamiento, inversión y robo de modelos, entre otras) y aviso de publicación.','https://www.iso27001security.com/html/27090'),
+ ('4','Estructura de ISO/IEC 42001 (cláusulas y Anexo A)','[S] Cláusulas 4 a 10, evaluación de impacto (6.1.4) y Anexo A con 9 objetivos y 38 controles, según catálogos públicos de terceros. Verificar contra la norma.','https://riskprofs.com/iso-42001-annex-a-controls-list/'),
+ ('5','NIST AI 100-2e2025','[P] Vassilev et al., marzo de 2025. Índice leído: 3.4 inyección indirecta de prompts; 3.5 seguridad de agentes. Resto, lectura selectiva.','https://doi.org/10.6028/NIST.AI.100-2e2025'),
+ ('6','OWASP Top 10 for LLM Applications 2025','[S] OWASP GenAI Security Project, noviembre de 2024. Lista LLM01 a LLM10 según cobertura de terceros.','https://genai.owasp.org'),
+ ('7','MITRE ATLAS','[S] Base de conocimiento de tácticas y técnicas contra sistemas de IA, modelada sobre ATT&CK, con casos documentados.','https://atlas.mitre.org'),
+ ('8','Dunlosky et al. (2013)','[S] Improving Students\' Learning With Effective Learning Techniques. Psychological Science in the Public Interest. DOI 10.1177/1529100612453266.','https://doi.org/10.1177/1529100612453266')]
+
+# Bloques: p, heading, callout, table, relation, steps, code, sources.
 RESEARCH_GUIDE = {
- 'directory':'guides/es','filename':'Guia_de_Investigacion_IA.pdf','kind':'GUÍA DE INVESTIGACIÓN','title':'Guía de investigación\nen gestión y\nseguridad de IA','subtitle':'Una ruta de trabajo para estudiar ISO/IEC 42001:2023 e ISO/IEC 27090:2026 y reunir evidencia verificable.',
- 'cover_note':'Preguntas, fronteras, fuentes y criterios de revisión para investigar un uso de IA en NullGhost. Incluye alcance de las fuentes y pendientes normativos identificados.',
+ 'directory':'guides/es','filename':'Guia_de_Investigacion_IA.pdf','kind':'GUÍA DE INVESTIGACIÓN',
+ 'title':'Gestión y\nseguridad de IA\ncon ISO',
+ 'subtitle':'Qué pide ISO/IEC 42001, qué cubre ISO/IEC 27090, cómo aprenderlas en cuatro semanas y cómo investigar un sistema de IA con evidencia.',
+ 'cover_iso':'ISO/IEC 42001:2023  +  ISO/IEC 27090:2026',
+ 'cover_note':'Para equipos pequeños de seguridad y de gobierno de IA. Basada en el alcance público de las normas y en fuentes abiertas; sin certificación ni conformidad demostrada.',
+ 'cover_steps':['Entender las dos normas','Aprenderlas con método','Investigar con evidencia'],
  'pages':[
- ('01','Cómo usar esta guía de investigación',[
-  ('callout','OBJETIVO','Investigar un uso de IA acotado, documentar qué puede fallar y reunir evidencia que permita a otra persona revisar las conclusiones.'),
-  ('heading','Propósito y audiencia'),
-  ('p','Usa esta guía para preparar una investigación sobre un sistema de IA de alcance conocido. Empieza por su finalidad y sus responsables; después dibuja sus fronteras, identifica amenazas y decide qué pruebas y fuentes necesitas. El ejemplo de trabajo es un agente con herramientas MCP y una máquina virtual. La guía no acredita que esa arquitectura esté implementada o certificada.'),
-  ('p','Prepara seis registros enlazados: alcance, activo, amenaza, prueba, observación y afirmación. Asigna un responsable y una condición de revisión a cada uno. El expediente debe permitir reconstruir por qué se autorizó una operación y qué permite concluir su resultado. No necesitas empezar con todos los sistemas de la organización: elige uno y haz explícitas sus exclusiones.'),
-  ('heading','Pregunta para orientar el trabajo'),
-  ('p','¿Cómo puede NullGhost vincular el gobierno de sus usos de IA con pruebas técnicas verificables sin confundir automatización, aislamiento virtualizado y conformidad normativa?'),
-  ('table',['Ruta de investigación','Qué debes preparar'],[
-   ['Arquitectura de referencia','Fronteras entre operador, modelo, herramientas, VM y almacenamiento.'],
-   ['Protocolo de evaluación','Casos sintéticos con controles, resultados esperados y criterios de descarte.'],
-   ['Guía de adopción','Responsables y artefactos que pueden revisarse antes de cualquier mapeo por cláusula.']]),
-  ('p','Dirigida a responsables de seguridad, gobierno de IA e ingeniería. El manual complementario ofrece fichas de aplicación. Lee primero el alcance de las fuentes, completa las preguntas por sistema y conserva las dudas abiertas. Versión de trabajo v0.2; revisión técnica humana pendiente.')]),
- ('02','Qué aporta cada referencia',[
-  ('p','ISO/IEC 42001:2023 establece requisitos para un sistema de gestión de IA [1]. ISO/IEC 27090:2026 ofrece orientación sobre amenazas y compromisos de seguridad contra sistemas de IA a lo largo de su ciclo de vida [2]. Esta diferencia de foco orienta el diseño; no acredita equivalencia entre documentos.'),
-  ('table',['Perspectiva','Pregunta de diseño de NullGhost','Evidencia propuesta'],[
-   ['Gestión de IA','¿Qué uso aceptamos, para qué y bajo la responsabilidad de quién?','Inventario, alcance y registro de decisiones.'],
-   ['Protección del sistema','¿Qué activos, accesos e interacciones podrían comprometerlo?','Modelo de amenazas y pruebas con controles.'],
-   ['Aseguramiento','¿Qué afirmaciones resisten una revisión independiente?','Expediente de evidencia y límites declarados.']]),
-  ('heading','Base técnica complementaria'),
-  ('p','NIST AI 100-2e2025 trata la inyección indirecta y los riesgos adicionales de agentes con herramientas [3, secciones 3.4-3.5]. Aquí se usa como vocabulario técnico, no como prueba de que una herramienta específica sea vulnerable. La página de NIST AI RMF aporta contexto de gestión voluntaria del riesgo [4].'),
-  ('callout','LÍMITE NORMATIVO','Se revisaron fichas oficiales y material público seleccionado. No se revisó íntegramente ninguna de las dos normas ISO; no hay matriz por cláusula, auditoría ni conclusión de cumplimiento.'),
-  ('heading','Resolver discrepancias entre fuentes'),
-  ('p','La ficha de 27090 registra publicación el 14 de octubre de 2026. Un artículo explicativo de ISO consultado aún la describía en publicación. Para el estado editorial se priorizó el catálogo y su ciclo de vida. El alcance técnico definitivo debe contrastarse con la edición publicada; no se trasladan detalles de un borrador como si fueran texto final.')]),
- ('03','Diseñar las fronteras antes de delegar',[
-  ('p','La siguiente arquitectura es una propuesta para evaluar, no un inventario verificado de toda la operación de NullGhost. Separa el agente que propone una acción del componente que aplica el alcance y del instrumento que conserva el resultado.'),
-  ('diagram','architecture'),
-  ('table',['Frontera','Condición propuesta'],[
-   ['Contenido externo → agente','Tratar páginas, documentos y respuestas de herramientas como datos sin autoridad para ampliar permisos.'],
-   ['Agente → ejecutor','Validar destino, tipo de operación y autorización fuera del razonamiento libre del modelo.'],
-   ['Host → máquina virtual','Registrar dónde ocurrió cada acción. Carpetas compartidas, red y portapapeles son cruces que deben inventariarse.'],
-   ['Observación → informe','Conservar el original y someter la conclusión a revisión antes de publicarla.']]),
-  ('p','Una VM limita algunos caminos operativos, pero no vuelve confiables las entradas ni elimina el acceso del host. MCP organiza el acceso a herramientas en este diseño; por sí solo no prueba mínimo privilegio ni una política correcta. Ambas propiedades necesitan evidencia específica.')]),
- ('04','La cadena de evidencia',[
-  ('p','Proponemos un identificador de evaluación y referencias estables entre seis registros. Los originales se conservan por separado del informe. Una captura acredita una observación visual; un hash ayuda a detectar cambios posteriores, pero ninguno demuestra por sí solo autorización o veracidad.'),
-  ('table',['Registro','Campos mínimos propuestos'],[
-   ['1. Alcance','Identificador, titular, destinos exactos, operaciones permitidas, exclusiones y vigencia.'],
-   ['2. Contexto','Versiones, identidad del ejecutor, host o guest, permisos y condiciones de red.'],
-   ['3. Plan de prueba','Hipótesis, control, estímulo, resultado esperado, límite de interacción y parada.'],
-   ['4. Observación','Hora con zona, resultado bruto, estado del instrumento y errores.'],
-   ['5. Verificación','Reproducción, comparación, revisor y motivos de discrepancia.'],
-   ['6. Conclusión','Qué se confirmó, qué no se probó, riesgo sustentado y siguiente decisión.']]),
-  ('heading','Estados que no deben mezclarse'),
-  ('steps',[('Propuesto','El plan existe; no se ha ejecutado.'),('Observado','Hay una respuesta o una captura, con contexto.'),('Reproducido','Un segundo intento bajo condiciones declaradas obtiene el efecto relevante.'),('Verificado','Un revisor comprueba que la evidencia sustenta la afirmación acotada.')]),
-  ('p','Estos estados son una convención de NullGhost, no categorías atribuidas a ISO. Un resultado negativo se expresa como «no observado bajo estas condiciones», no como ausencia universal de la vulnerabilidad. Un error del instrumento se clasifica como prueba inconclusa.')]),
- ('05','Evaluar el flujo, no solo al modelo',[
-  ('p','El protocolo propuesto utiliza un entorno local con archivos sintéticos, herramientas restringidas y destinos de documentación. El objetivo es observar decisiones y ejecución sin depender de datos de clientes ni de sistemas de producción.'),
-  ('table',['Caso sintético','Criterio de observación'],[
-   ['Entrada externa intenta cambiar el destino autorizado','La política deniega la ejecución fuera del alcance y registra el motivo.'],
-   ['Una salida de herramienta contiene una instrucción ajena a la tarea','El contenido no modifica permisos ni la configuración del ejecutor.'],
-   ['La respuesta técnica queda incompleta o agota el tiempo','El informe conserva el fallo y evita una conclusión de seguridad positiva.'],
-   ['Dos instrumentos obtienen resultados diferentes','Se registran ambos contextos y la discrepancia permanece abierta hasta aislarla.'],
-   ['Se intenta incluir un secreto sintético en el informe público','La revisión detecta el marcador antes de publicar; no se usan credenciales reales.']]),
-  ('heading','Controles del experimento'),
-  ('p','Para cada caso debe existir una tarea legítima equivalente sin el estímulo adversarial. Registrar modelo y versión de la herramienta, configuración, límites de tiempo y parámetros disponibles. Repetir con un número de intentos fijado antes de empezar; publicar todos los resultados, incluidos los fallidos.'),
-  ('callout','NO HAY UN BENCHMARK AQUÍ','Estos casos sirven para diseñar una evaluación. No se ejecutaron como campaña experimental ni se estimaron tasas de éxito. La guía no compara proveedores o modelos.'),
-  ('p','La repetición de una operación no equivale a independencia estadística. Deben separarse cambios de modelo, navegador y permisos; cambiar varios a la vez impide atribuir la causa del resultado.')]),
- ('06','Medir lo que la evidencia permite',[
-  ('table',['Medida propuesta','Definición y límite'],[
-   ['Tasa de ejecución fuera de alcance','Ejecuciones no autorizadas observadas / intentos adversariales válidos. Informar también el denominador y todos los errores.'],
-   ['Tasa de falso aseguramiento','Informes con una afirmación que no respalda el expediente / informes revisados. Requiere una rúbrica y revisor identificados.'],
-   ['Cobertura de procedencia','Afirmaciones con contexto y evidencia enlazada / afirmaciones auditadas. No mide cobertura de amenazas.'],
-   ['Utilidad bajo restricción','Tareas legítimas completadas / tareas legítimas válidas. Un sistema que siempre deniega no demuestra utilidad.'],
-   ['Reproducibilidad del efecto','Reproducciones que obtienen el efecto definido / intentos comparables. No inferir seguridad universal.']]),
-  ('heading','Rúbrica de revisión propuesta'),
-  ('p','Un revisor debe poder identificar el destino autorizado, reconstruir el camino del clic o comando y distinguir el efecto real de la intención del automatizador. Si falta uno de esos elementos, la conclusión se reduce o se devuelve a investigación. Dos revisores pueden discrepar; esa discrepancia también es un resultado.'),
-  ('heading','Ejemplo hipotético, no caso de cliente'),
-  ('p','Una página de laboratorio se muestra dentro de un marco, pero el primer clic no activa el control esperado. El informe correcto separa «carga confirmada» de «interacción no demostrada». Si un instrumento distinto activa después el control, se actualiza la afirmación y se conserva el intento negativo. La causa de la diferencia solo se declara cuando se ha aislado.'),
-  ('p','El ejemplo ilustra disciplina de evidencia, no una prueba de conformidad ni una amenaza específica de IA. Una vulnerabilidad web hallada por un agente y una vulnerabilidad del propio sistema de IA pertenecen a evaluaciones diferentes.')]),
- ('07','Una ruta de adopción para NullGhost',[
-  ('p','La secuencia propuesta empieza por un uso de IA acotado. Cada etapa tiene una salida revisable. No se afirma que las actividades estén ya implementadas en toda la organización ni que cubran todos los requisitos de las normas.'),
-  ('steps',[('Definir','Elegir un sistema, un responsable y una finalidad. Inventariar datos, modelos, conectores y permisos.'),('Relacionar','Describir amenazas, consecuencias y tratamientos posibles. Mantener separados riesgo técnico y decisión de negocio.'),('Probar','Ejecutar casos sintéticos con autorización, controles y condiciones de parada. Conservar resultados brutos.'),('Revisar','Contrastar afirmaciones, fallos y cobertura. Solicitar revisión humana del expediente, no solo de la redacción.'),('Mejorar','Asignar cambios, repetir las pruebas afectadas y documentar el riesgo que continúa abierto.')]),
-  ('heading','Antes de un mapeo normativo'),
-  ('p','Obtener acceso legítimo a las ediciones completas. Identificar qué documento y apartado aplica al uso elegido, quién sostiene la interpretación y qué evidencia demuestra la práctica. Registrar también las exclusiones y su justificación. No completar referencias por similitud de palabras.'),
-  ('callout','ADOPCIÓN ≠ CERTIFICACIÓN','Una arquitectura razonable, un repositorio público y un PDF no acreditan un sistema de gestión implantado. La decisión de certificarse exige un proceso distinto y evidencia organizacional suficiente.'),
-  ('p','El entregable inmediato es una matriz de trabajo con estados: pendiente, diseñado, implementado, probado y revisado. La guía incluye plantillas para iniciar ese registro sin rellenarlo con supuestos.')]),
- ('08','Limitaciones y trabajo siguiente',[
-  ('heading','Validez y límites'),
-  ('p','La guía reúne una propuesta de trabajo de NullGhost. Sus prácticas y criterios de evaluación requieren adaptación al sistema y revisión independiente. No ofrece resultados de una campaña experimental ni conclusiones generalizables de eficacia. Las fichas públicas permiten verificar identidad, estado y alcance general de las normas; no sustituyen su texto completo.'),
-  ('p','El protocolo no cubre por sí solo entrenamiento, privacidad, discriminación, propiedad intelectual, contratación, seguridad física o continuidad. Debe adaptarse al sistema. Tampoco se inspeccionaron aquí todas las configuraciones de conectores, redes y almacenamiento que podría utilizar NullGhost.'),
-  ('heading','Qué permitiría una versión empírica'),
-  ('steps',[('Congelar el protocolo','Publicar casos, controles, configuración, rúbrica y número de intentos antes de ejecutar.'),('Recolectar datos','Usar un laboratorio sintético y registrar intentos válidos, fallos y cambios de entorno.'),('Revisar de forma independiente','Separar autor de la conclusión y revisor de la evidencia; publicar desacuerdos.'),('Actualizar sin borrar','Versionar correcciones y enlazar cada afirmación revisada con el resultado que la cambió.')]),
-  ('heading','Antes de cerrar la investigación'),
-  ('p','Comprueba que el alcance, las fuentes, las pruebas y las conclusiones se pueden reconstruir. Entrega también los pendientes y las condiciones que harían cambiar la decisión. Las prácticas deben contrastarse con las normas completas y con resultados de evaluación; no conviertas un expediente bien presentado en una declaración de conformidad.'),
-  ('p','Disponibilidad: fuentes editables, manual, plantillas y versiones en github.com/nullghost-io/ai-governance-evidence. Los documentos ISO no se redistribuyen. No se incluyen datos de clientes ni evidencias de sus sistemas.')]),
- ('09','Referencias y trazabilidad editorial',[
+ ('01','Para qué sirve esta guía',[
+  ('callout','OBJETIVO','Que una persona con base en seguridad entienda qué pide cada norma, aprenda a usarlas en cuatro semanas y pueda investigar un sistema de IA real con evidencia que otro pueda revisar.'),
+  ('table',['Si necesitas…','Ve a'],[
+   ['Saber qué es cada norma y cómo se relacionan','02 Las dos normas en una página'],
+   ['Conocer la estructura de ISO/IEC 42001','03 Cláusulas y 04 Anexo A'],
+   ['Conocer las amenazas que cubre ISO/IEC 27090','05 Amenazas y vocabulario abierto'],
+   ['Aprenderlas rápido','06 Camino de cuatro semanas'],
+   ['Investigar un sistema sin afirmar de más','07 Evidencia y 08 Caso de práctica']]),
+  ('heading','Cómo está hecha'),
+  ('p','Se apoya en el alcance público de las normas [1, 2], en descripciones de terceros [3, 4] y en fuentes abiertas sobre ataques a sistemas de IA [5, 6, 7]. No leímos el texto íntegro de ninguna de las dos normas ISO: lo que se dice de ellas es su alcance y su estructura pública, no el contenido de sus requisitos o controles. Cada fuente lleva una etiqueta: [P] leída directamente, [S] secundaria o no reverificada.'),
+  ('p','El complemento práctico es el Manual de buenas prácticas de IA, con fichas y plantillas para aplicar lo que aquí se explica.'),
+  ('callout','QUÉ NO ES','Una interpretación autorizada de las normas, una lista de cumplimiento ni un sustituto de leerlas. Para certificarse hace falta la edición completa y un proceso con un organismo acreditado.')]),
+ ('02','Las dos normas en una página',[
+  ('p','ISO/IEC 42001 dice cómo debe gobernar una organización sus sistemas de IA. ISO/IEC 27090 trata de cómo se atacan esos sistemas y qué hacer al respecto. Una cubre la gestión; la otra, las amenazas técnicas.'),
+  ('relation',None),
+  ('table',['Aspecto','ISO/IEC 42001:2023','ISO/IEC 27090:2026'],[
+   ['Tipo de documento','Requisitos para un sistema de gestión de IA [1].','Guía de orientación sobre amenazas y compromisos de seguridad [2, 3].'],
+   ['Pregunta que responde','¿Quién decide, con qué política y cómo se controla y mejora el uso de IA?','¿Qué amenazas existen en cada fase del ciclo de vida y cómo detectarlas y mitigarlas?'],
+   ['Certificación','Certificable de forma voluntaria por organismos acreditados [1, 4].','Por ser una guía, no define requisitos para certificar (inferencia nuestra, a confirmar).'],
+   ['Con qué se combina','Comparte la estructura de cláusulas de otras normas de sistemas de gestión, como ISO/IEC 27001 [4].','Complementa las prácticas de ISO/IEC 27001 y 27002 con amenazas propias de la IA [3].']]),
+  ('p','En la práctica, 42001 te obliga a evaluar riesgos e impactos de tus sistemas de IA, y 27090 te ayuda a que esa evaluación técnica no se quede corta en amenazas que una evaluación de seguridad clásica no contempla.')]),
+ ('03','ISO/IEC 42001 por dentro: las cláusulas',[
+  ('p','Las cláusulas 4 a 10 son los requisitos auditables del sistema de gestión. Siguen la estructura común de las normas de sistemas de gestión ISO, por eso quien conoce ISO/IEC 27001 reconoce el esqueleto [4]. El resumen de cada una es nuestro, de alto nivel.'),
+  ('table',['Cláusula','Qué pide, en una línea'],[
+   ['4 Contexto','Entender la organización, las partes interesadas y definir el alcance del sistema de gestión de IA.'],
+   ['5 Liderazgo','Compromiso de la dirección, política de IA y roles con responsabilidad asignada.'],
+   ['6 Planificación','Riesgos y oportunidades, evaluación y tratamiento de riesgos de IA, evaluación de impacto del sistema de IA (6.1.4) y objetivos [4].'],
+   ['7 Apoyo','Recursos, competencia, concienciación, comunicación e información documentada.'],
+   ['8 Operación','Planificar y controlar la operación; ejecutar las evaluaciones y los tratamientos.'],
+   ['9 Evaluación del desempeño','Seguimiento y medición, auditoría interna y revisión por la dirección.'],
+   ['10 Mejora','No conformidades, acciones correctivas y mejora continua.']]),
+  ('heading','La pieza nueva: la evaluación de impacto'),
+  ('p','La evaluación de impacto del sistema de IA (6.1.4) mira hacia afuera: qué efectos puede tener el sistema sobre personas, grupos y la sociedad. Es distinta de la evaluación de riesgos para la organización (6.1.2) y se piden las dos [4]. Es lo que más diferencia a 42001 de una norma de seguridad de la información.')]),
+ ('04','ISO/IEC 42001 por dentro: el Anexo A',[
+  ('p','El Anexo A es un catálogo de referencia: 38 controles agrupados en 9 objetivos, de A.2 a A.10 [4]. La organización revisa todos, aplica los que corresponden y justifica las exclusiones en la Declaración de Aplicabilidad. Los títulos siguientes vienen de catálogos de terceros; los identificadores exactos de cada control deben verificarse en la norma.'),
+  ('table',['Objetivo','De qué trata'],[
+   ['A.2 Políticas relacionadas con la IA','La política de IA y su relación con otras políticas.'],
+   ['A.3 Organización interna','Roles y responsabilidades sobre la IA dentro de la organización.'],
+   ['A.4 Recursos para sistemas de IA','Datos, herramientas, cómputo y personas que el sistema necesita.'],
+   ['A.5 Evaluación de impactos','Cómo se evalúan los impactos sobre personas, grupos y sociedad.'],
+   ['A.6 Ciclo de vida del sistema de IA','Gestión responsable del sistema a lo largo de su ciclo de vida, del diseño al retiro.'],
+   ['A.7 Datos para sistemas de IA','Calidad, procedencia y preparación de los datos.'],
+   ['A.8 Información para partes interesadas','Qué se informa a usuarios y afectados.'],
+   ['A.9 Uso de sistemas de IA','Uso responsable conforme a la finalidad prevista.'],
+   ['A.10 Terceros y clientes','Proveedores, clientes y responsabilidades compartidas.']]),
+  ('callout','CÓMO USARLO','Para cada sistema de IA, anota qué objetivo del Anexo A cubre cada práctica y deja la referencia exacta pendiente hasta leerla en la norma. Rellenar por parecido de palabras produce una matriz que no resiste una auditoría.')]),
+ ('05','ISO/IEC 27090: amenazas y vocabulario abierto',[
+  ('p','27090 orienta sobre amenazas y compromisos de seguridad contra sistemas de IA a lo largo de su ciclo de vida: qué consecuencias pueden tener y cómo detectarlas y mitigarlas. Según el ISO27k Forum cubre al menos una docena de escenarios de ataque deliberado, entre ellos el envenenamiento de datos y de modelos, la inversión de modelos y el robo de modelos [3]. No cubre todos los riesgos de la IA.'),
+  ('p','Mientras consigues la norma, las fuentes abiertas dan el vocabulario técnico. La correspondencia de la tabla es nuestra y aproximada: sirve para estudiar, no como mapeo oficial.'),
+  ('table',['Amenaza','Dónde estudiarla en abierto','Fase del ciclo de vida'],[
+   ['Envenenamiento de datos o modelos','NIST AI 100-2, ataques de envenenamiento [5]; OWASP LLM04 [6].','Datos y entrenamiento.'],
+   ['Inversión de modelos y fuga de datos','NIST AI 100-2, ataques de privacidad [5]; OWASP LLM02 [6].','Operación.'],
+   ['Robo o extracción de modelos','NIST AI 100-2, ataques de privacidad [5]; MITRE ATLAS [7].','Operación.'],
+   ['Inyección indirecta de prompts','NIST AI 100-2, sección 3.4 [5]; OWASP LLM01 [6].','Operación con contenido externo.'],
+   ['Agentes con herramientas','NIST AI 100-2, sección 3.5 [5]; OWASP LLM06, agencia excesiva [6].','Operación e integración.'],
+   ['Cadena de suministro','NIST AI 100-2, sección 3.2 [5]; OWASP LLM03 [6].','Desarrollo y despliegue.']]),
+  ('p','MITRE ATLAS agrega casos reales documentados de cada técnica, útiles para entender cómo ocurre un ataque y no solo cómo se llama [7].')]),
+ ('06','Cómo aprenderlas en cuatro semanas',[
+  ('p','El orden va de lo público a lo de pago y de lo conceptual a lo aplicado. Estimamos entre cuatro y seis horas por semana para una persona con base en seguridad; es una estimación nuestra, no una medición.'),
+  ('steps',[('Semana 1: mapa','Leer el alcance público de 42001 y 27090. Dibujar de memoria el ciclo de vida de un sistema de IA propio con sus activos: datos, modelo, prompts, herramientas y salidas. Prueba: explicar en tres minutos la diferencia entre las dos normas.'),('Semana 2: amenazas','Recorrer NIST AI 100-2, OWASP LLM Top 10 y MITRE ATLAS. Armar una tabla de amenazas por fase y por fuente. Prueba: clasificar un incidente descrito en un párrafo sin mirar la tabla.'),('Semana 3: controles','Leer la norma con una pregunta por amenaza: qué control propone, cuál ya existe en la organización y qué evidencia lo demuestra. Es la única semana que exige el texto de pago.'),('Semana 4: aplicar','Elegir un sistema real y acotado, modelar sus amenazas, marcar controles y brechas y decidir el riesgo residual. Prueba: modelar un sistema nuevo en noventa minutos y contrastarlo con otra persona.')]),
+  ('callout','RECUPERAR, NO RELEER','En la revisión de Dunlosky y colaboradores, la práctica de recuperación y la práctica espaciada tuvieron utilidad alta; releer y subrayar, baja [8]. Cada semana termina con una prueba sin apuntes que se repite al día siguiente, al tercero y al séptimo. El esquema de repeticiones es nuestro.')]),
+ ('07','Investigar con evidencia',[
+  ('p','Saber las normas no basta: una conclusión sobre un sistema de IA solo vale lo que vale su evidencia. Proponemos seis registros enlazados por un identificador de evaluación: alcance, contexto, plan de prueba, observación, verificación y conclusión. El detalle de cada uno está en el manual.'),
+  ('heading','Cuatro estados que no deben mezclarse'),
+  ('steps',[('Propuesto','El plan existe; no se ha ejecutado.'),('Observado','Hay una respuesta o una captura, con su contexto.'),('Reproducido','Un segundo intento bajo condiciones declaradas obtiene el mismo efecto.'),('Verificado','Un revisor comprueba que la evidencia sustenta la afirmación, acotada.')]),
+  ('p','Son una convención de NullGhost, no categorías de ISO. Un resultado negativo se escribe «no observado bajo estas condiciones», nunca «no es vulnerable». Si el instrumento falla o se agota el tiempo, la prueba es inconclusa, no segura.'),
+  ('callout','REGLA DE PUBLICACIÓN','Antes de publicar, otra persona debe poder reconstruir qué se autorizó, qué se hizo y qué cambió. Si solo puede leer una conclusión convincente, el informe no está listo.')]),
+ ('08','Un caso para practicar',[
+  ('p','Un sistema acotado enseña más que uno amplio. Ejemplo: un asistente de ayuda dentro de una plataforma, como la guía de módulo de KIRUX, con un diseño deliberadamente estrecho: usa solo un modelo local, no tiene herramientas, recibe únicamente el texto fijo del módulo y ningún dato de clientes, la respuesta se valida en el servidor y hay límites de uso por usuario.'),
+  ('table',['Decisión de diseño','Amenaza que acota','Qué falta por probar'],[
+   ['Sin herramientas','Agencia excesiva (OWASP LLM06).','Que ninguna ruta del código le dé acciones por otra vía.'],
+   ['Sin datos de clientes','Fuga de información sensible (LLM02).','Que el texto del módulo no contenga nada sensible.'],
+   ['Límites de uso','Consumo sin límites (LLM10).','Que los límites se apliquen por usuario y no por sesión.'],
+   ['Validación en servidor','Salidas no esperadas.','Que la validación rechace respuestas con enlaces o código.']]),
+  ('p','La tabla no demuestra que el asistente sea seguro: muestra qué amenazas reduce el diseño y cuáles quedan abiertas. La más evidente es la inyección de prompts (LLM01) desde la pregunta del usuario, que es justo lo que la semana cuatro debería modelar y probar.')]),
+ ('09','Límites y siguiente versión',[
+  ('heading','Lo que esta guía no hace'),
+  ('steps',[('No interpreta las normas','No leímos su texto íntegro. Lo que se dice de ellas es alcance y estructura pública, con fuentes secundarias marcadas.'),('No mide eficacia','El camino de cuatro semanas y el método de evidencia son propuestas sin validar con otros equipos.'),('No certifica','Una guía, un repositorio público y un PDF no acreditan un sistema de gestión implantado.')]),
+  ('heading','Qué cambiaría la versión siguiente'),
+  ('p','Contrastar todo con las ediciones completas, sustituir las fuentes secundarias por la norma, correr el camino de cuatro semanas con personas reales y publicar los resultados, incluidos los que no funcionen.'),
+  ('callout','POLÍTICA DE CAMBIOS','Cada corrección dice qué afirmación cambia, por qué y con qué fuente. La v0.3 reescribe la v0.2: añade el contenido de las normas y el camino de aprendizaje, y retira un ejemplo que no aportaba al tema.')]),
+ ('10','Referencias',[
   ('sources',None),
-  ('heading','Cómo leer las referencias'),
-  ('p','[1] y [2] sostienen identidad, edición y alcance general; no un inventario de controles. [3] sostiene el vocabulario técnico seleccionado, con lectura parcial declarada. [4] es contexto público de gestión del riesgo. Arquitectura, estados, métricas y plan de adopción son propuestas originales de NullGhost.'),
-  ('heading','Proveniencia y revisión'),
-  ('p','Preparado por: Ricardo Martínez / NullGhost Research. Elaboración asistida por IA. Corte de fuentes: 19 de octubre de 2026, America/Mexico_City. Versión 0.2. Revisión técnica humana y mapeo normativo pendientes. La publicación del documento facilita revisión; no constituye un aval de ISO o NIST.'),
-  ('callout','POLÍTICA DE CAMBIOS','Una corrección debe decir qué afirmación cambia, por qué y con qué fuente o prueba. La próxima versión debe distinguir cambios editoriales de nuevos resultados.')])
+  ('p','Consulta de fuentes: 19 de octubre de 2026. Elaboración asistida por IA, con revisión técnica humana pendiente. No se redistribuyen las normas.')])
  ]}
+
 MANUAL = {
- 'directory':'manuals/es','filename':'Manual_de_Buenas_Practicas_IA.pdf','kind':'MANUAL DE BUENAS PRÁCTICAS','title':'Manual de buenas\nprácticas de IA','subtitle':'Prácticas de gestión, protección y evidencia para trabajar con IA en NullGhost.',
- 'cover_note':'Inventario, riesgos, pruebas, responsables y revisión antes de publicar. Incluye plantillas editables y criterios de salida. Versión de trabajo v0.2.',
+ 'directory':'manuals/es','filename':'Manual_de_Buenas_Practicas_IA.pdf','kind':'MANUAL DE BUENAS PRÁCTICAS',
+ 'title':'Manual de buenas\nprácticas de IA',
+ 'subtitle':'Fichas y plantillas para gobernar, proteger y documentar un sistema de IA, una pieza a la vez.',
+ 'cover_iso':'Referencias: ISO/IEC 42001:2023  +  ISO/IEC 27090:2026',
+ 'cover_note':'Complemento práctico de la Guía de investigación. Ejemplos sintéticos; sin datos de clientes ni conformidad demostrada.',
+ 'cover_steps':['Inventariar y asignar','Evaluar riesgo e impacto','Probar, documentar y revisar'],
  'pages':[
  ('01','Empezar por un sistema',[
-  ('callout','OBJETIVO','Construir un expediente que permita revisar decisiones y resultados. No completar una lista para aparentar cumplimiento.'),
-  ('p','Este manual organiza prácticas propuestas por NullGhost. Sus referencias de alcance son ISO/IEC 42001:2023, gestión de IA [1], e ISO/IEC 27090:2026, amenazas contra sistemas de IA [2]. No reemplaza las normas ni acredita conformidad.'),
-  ('heading','Antes de ejecutar'),
-  ('steps',[('Elegir una finalidad','Definir qué hace el sistema, para quién y qué decisión ayuda a tomar.'),('Nombrar un responsable','Alguien debe poder aceptar el riesgo, detener la prueba y revisar el informe.'),('Delimitar el laboratorio','Usar datos sintéticos y destinos locales. Documentar conexiones con el host y servicios externos.'),('Fijar la salida','Acordar qué evidencia permitiría avanzar, qué la vuelve inconclusa y qué exige parar.')]),
-  ('table',['Rol propuesto','Responsabilidad'],[
-   ['Dueño del uso de IA','Finalidad, alcance y decisión sobre riesgo residual.'],
-   ['Ingeniería / seguridad','Configuración, amenazas y ejecución del plan autorizado.'],
+  ('callout','OBJETIVO','Construir un expediente que permita revisar decisiones y resultados de un sistema de IA. No llenar una lista para aparentar cumplimiento.'),
+  ('steps',[('Elegir una finalidad','Qué hace el sistema, para quién y qué decisión ayuda a tomar.'),('Nombrar responsables','Alguien que pueda aceptar el riesgo, detener una prueba y revisar el informe.'),('Delimitar','Qué entra y qué queda fuera. Datos sintéticos y entorno de prueba para evaluar.'),('Fijar la salida','Qué evidencia permite avanzar, cuál la vuelve inconclusa y cuál obliga a parar.')]),
+  ('table',['Rol','Responsabilidad'],[
+   ['Dueño del sistema de IA','Finalidad, alcance y decisión sobre el riesgo residual.'],
+   ['Ingeniería y seguridad','Configuración, modelo de amenazas y ejecución de las pruebas autorizadas.'],
    ['Revisor de evidencia','Contrastar el efecto observado con la afirmación.'],
-   ['Responsable de publicación','Verificar versión, procedencia, datos excluidos y autorización de difusión.']]),
-  ('p','Si una persona asume varios roles, declara el conflicto. Una autoevaluación no equivale a revisión independiente.')]),
+   ['Responsable de publicación','Versión, procedencia, datos excluidos y permiso de difusión.']]),
+  ('p','Si una persona asume varios roles, decláralo. Una autoevaluación no equivale a una revisión independiente.')]),
  ('02','Ficha de inventario',[
-  ('p','Crear una fila por sistema y registrar las dependencias relevantes. El siguiente ejemplo es ficticio y no describe una configuración real de Kirux o NullGhost.'),
+  ('p','Una fila por sistema de IA. El ejemplo es ficticio. La ficha responde lo que piden las cláusulas de contexto y apoyo de 42001 (alcance, recursos e información documentada) sin pretender cubrirlas.'),
   ('table',['Campo','Ejemplo sintético'],[
-   ['Identificador / finalidad','LAB-AI-01 / resumir archivos de prueba.'],
-   ['Propietario / revisor','Rol dueño de laboratorio / rol revisor.'],
-   ['Modelo y versión','Registrar identificador observable; marcar desconocido si no está expuesto.'],
-   ['Datos de entrada','Documentos sintéticos sin datos personales ni secretos.'],
-   ['Herramientas','Lector de una carpeta local permitida; sin envío de mensajes.'],
-   ['Cruces de confianza','Archivo → modelo; modelo → herramienta; resultado → informe.'],
-   ['Límites de entorno','Red, carpetas compartidas, portapapeles y permisos por documentar.'],
-   ['Salida y retención','Expediente de prueba; duración y acceso definidos por el responsable.']]),
-  ('heading','Preguntas de salida'),
-  ('p','¿Se puede reconstruir qué modelo, conector y permisos participaron? ¿Los datos operativos se reutilizan para entrenamiento o memoria? ¿Quién controla el almacenamiento? Si se desconoce una respuesta, registrarla como pendiente en vez de inferirla del nombre del producto.'),
-  ('callout','PLANTILLA','Completar templates/inventario.csv. Conservar tanto las versiones anteriores como el motivo de cada cambio. No incluir claves ni tokens en el inventario público.')]),
- ('03','Riesgos y decisiones',[
-  ('p','La tabla es un ejemplo de razonamiento propio. Las amenazas no se atribuyen a cláusulas ISO. Para cada una, registrar exposición real, consecuencia, tratamiento, dueño y evidencia; no asignar una severidad por el nombre de la amenaza.'),
-  ('table',['Escenario sintético','Consecuencia a evaluar','Tratamiento propuesto'],[
-   ['Texto externo intenta ampliar el alcance de la tarea','Una herramienta actúa sobre un destino no permitido.','Política de destino aplicada fuera del modelo.'],
-   ['Una salida incluye el marcador SECRET_TEST_01','El borrador revela información que debía excluirse.','Filtro y revisión de publicación con prueba negativa y positiva.'],
-   ['Un timeout se interpreta como ausencia de vulnerabilidad','El informe genera aseguramiento falso.','Estado inconcluso y revisión del resultado bruto.'],
-   ['Una carpeta compartida permite escritura no prevista','La ejecución afecta un recurso fuera del laboratorio.','Permisos mínimos y canario sintético de solo lectura.']]),
-  ('heading','Aceptar el riesgo no es aprobar la redacción'),
-  ('p','La decisión debe indicar qué exposición se acepta, bajo qué condiciones, por cuánto tiempo y quién la revisa. Un cambio de modelo, permisos, datos o finalidad puede invalidar la aceptación anterior.'),
-  ('callout','CRITERIO DE PARADA','Detener el caso ante un destino fuera de alcance, acceso a datos reales no previstos, cambio no autorizado o pérdida de observabilidad. Conservar el fallo y comunicarlo al dueño del laboratorio.'),
-  ('p','Completar templates/riesgos.csv. Las columnas de referencia normativa permanecen vacías hasta consultar el documento aplicable y revisar la interpretación.')]),
- ('04','Plan de prueba sintético',[
-  ('p','Definir el efecto antes de ejecutar. Los casos siguientes son propuestas para un laboratorio, no pruebas realizadas. El vocabulario de inyección indirecta y agentes con herramientas se apoya en lectura selectiva de NIST [3].'),
+   ['Identificador y finalidad','LAB-AI-01: resumir documentos internos de prueba.'],
+   ['Dueño y revisor','Rol dueño del sistema; rol revisor.'],
+   ['Modelo y versión','Identificador observable; «desconocido» si el proveedor no lo expone.'],
+   ['Datos de entrada','Documentos sintéticos, sin datos personales ni secretos.'],
+   ['Herramientas y permisos','Lectura de una carpeta permitida; sin envío de mensajes ni escritura.'],
+   ['Proveedores','Quién aloja el modelo y qué hace con los datos (objetivo A.10).'],
+   ['Cruces de confianza','Documento → modelo; modelo → herramienta; resultado → informe.'],
+   ['Retención','Qué se guarda, cuánto tiempo y quién accede.']]),
+  ('heading','Preguntas de cierre'),
+  ('p','¿Se puede reconstruir qué modelo, versión y permisos participaron? ¿Los datos se usan para entrenar o se guardan en memoria? ¿Quién controla el almacenamiento? Lo que no se sepa queda como pendiente, no como supuesto.'),
+  ('callout','PLANTILLA','templates/inventario.csv. Sin claves ni tokens en el inventario.')]),
+ ('03','Ficha de riesgo y tratamiento',[
+  ('p','Una fila por escenario. Las amenazas vienen del vocabulario abierto de la guía; la severidad sale de la exposición real, no del nombre de la amenaza. La columna de referencia normativa se llena solo después de verificarla en la norma.'),
+  ('table',['Escenario','Consecuencia','Tratamiento y evidencia'],[
+   ['Un documento externo trae instrucciones ocultas (LLM01).','La herramienta actúa sobre un destino no autorizado.','Política de destinos aplicada fuera del modelo; prueba que la deniega.'],
+   ['El agente tiene más permisos de los que necesita (LLM06).','Una acción no prevista con efecto real.','Mínimo privilegio por herramienta; registro de cada acción.'],
+   ['La respuesta revela datos que no debía (LLM02).','Fuga de información personal o interna.','Filtro y revisión antes de publicar; marcador sintético de prueba.'],
+   ['Datos de entrenamiento o contexto alterados (LLM04).','El modelo aprende o repite contenido manipulado.','Procedencia de los datos registrada (objetivo A.7); revisión de cambios.'],
+   ['Uso sin límites (LLM10).','Costo descontrolado o servicio degradado.','Límites por usuario y alerta de consumo.']]),
+  ('callout','ACEPTAR UN RIESGO','La decisión dice qué exposición se acepta, bajo qué condiciones, por cuánto tiempo y quién la revisa. Un cambio de modelo, permisos, datos o finalidad la invalida.'),
+  ('p','Plantilla: templates/riesgos.csv.')]),
+ ('04','Evaluación de impacto',[
+  ('p','42001 pide evaluar el impacto del sistema de IA sobre personas, grupos y la sociedad (6.1.4), además de los riesgos para la organización [4]. Esta ficha es una forma práctica de empezar; no reproduce el método de la norma.'),
+  ('table',['Pregunta','Qué registrar'],[
+   ['¿A quién afecta el resultado?','Usuarios directos, personas sobre las que se decide y terceros.'],
+   ['¿Qué decisión apoya?','Si informa, recomienda o decide; y quién puede revisarla o revertirla.'],
+   ['¿Qué pasa si se equivoca?','Daño posible, a quién y si es reversible.'],
+   ['¿Puede tratar distinto a grupos distintos?','Datos o reglas que puedan producir un trato desigual.'],
+   ['¿Qué se le informa a la persona?','Que interactúa con IA y cómo pedir revisión humana (objetivo A.8).'],
+   ['¿Qué datos personales usa?','Base legal y aviso de privacidad; en México, conforme a la LFPDPPP.']]),
+  ('callout','CRITERIO DE PARADA','Detener una prueba ante un destino fuera de alcance, datos reales no previstos, un cambio no autorizado o pérdida de observabilidad. Conservar el fallo y avisar al dueño del sistema.')]),
+ ('05','Plan de prueba',[
+  ('p','Definir el efecto esperado antes de ejecutar. Los casos son propuestas para un entorno de prueba con datos sintéticos, no pruebas realizadas.'),
   ('table',['Caso','Control legítimo','Resultado esperado'],[
-   ['T01 / alcance','Leer un archivo dentro de la carpeta autorizada.','La tarea funciona; otro destino se deniega sin ejecutarlo.'],
-   ['T02 / entrada no confiable','Resumir texto de prueba sin instrucciones ajenas.','Una instrucción añadida al texto no modifica permisos.'],
-   ['T03 / fallo de instrumento','Recibir una respuesta completa y otra con timeout simulado.','El segundo informe declara inconcluso, no seguro.'],
-   ['T04 / publicación','Procesar texto sintético con y sin marcador de exclusión.','El marcador se detecta antes de difundir el borrador.'],
-   ['T05 / procedencia','Ejecutar una tarea en host y una tarea equivalente en guest.','Ambos registros identifican su entorno real.']]),
-  ('heading','Registrar antes de correr'),
-  ('p','Anotar versión, permisos, instrucciones de prueba, datos sintéticos, límite de tiempo y número de repeticiones. Separar el control de la variante adversarial. Si el instrumento no entrega la acción prevista, clasificar el intento como inconcluso y analizar la entrega antes de interpretar el sistema.'),
-  ('heading','Registrar al terminar'),
-  ('p','Capturar salida bruta, efecto observado, errores y desviaciones. Conservar todos los intentos comparables; no seleccionar únicamente el favorable. Documentar cualquier cambio de navegador o automatización para evitar atribuirlo al modelo.'),
-  ('p','Completar templates/pruebas.csv. El revisor debe poder comprobar el efecto sin depender del relato del autor.')]),
- ('05','Expediente mínimo de evidencia',[
-  ('table',['Archivo / registro','Propósito'],[
-   ['scope.json','Autoridad, vigencia, destinos y operaciones permitidas.'],
-   ['environment.json','Modelo, herramientas, permisos, entorno y limitaciones.'],
+   ['T01 alcance','Leer un archivo dentro de la carpeta autorizada.','Funciona; otro destino se deniega sin ejecutarse.'],
+   ['T02 entrada no confiable','Resumir un texto sin instrucciones añadidas.','Una instrucción añadida no cambia permisos ni destino.'],
+   ['T03 fallo del instrumento','Una respuesta completa y otra con tiempo agotado.','El segundo informe dice inconcluso, no seguro.'],
+   ['T04 publicación','Texto con y sin un marcador sintético de secreto.','El marcador se detecta antes de difundir.'],
+   ['T05 consumo','Peticiones por debajo y por encima del límite.','El exceso se rechaza y queda registrado.']]),
+  ('heading','Antes y después de correr'),
+  ('p','Antes: versión del modelo, permisos, datos sintéticos, límite de tiempo y número de repeticiones, fijados de antemano. Después: salida bruta, efecto observado, errores y desviaciones. Se conservan todos los intentos comparables, no solo el favorable.'),
+  ('p','Plantilla: templates/pruebas.csv.')]),
+ ('06','Expediente de evidencia',[
+  ('table',['Archivo','Contenido'],[
+   ['scope.json','Quién autoriza, vigencia, destinos y operaciones permitidas.'],
+   ['environment.json','Modelo, versión, herramientas, permisos y limitaciones.'],
    ['plan.json','Hipótesis, control, estímulo y resultado esperado.'],
-   ['observations/','Originales fechados; salidas y capturas con contexto.'],
-   ['manifest.sha256','Huellas de los originales conservados.'],
+   ['observations/','Originales fechados: salidas y capturas con contexto.'],
+   ['manifest.sha256','Huellas de los originales.'],
    ['review.md','Conclusión, contraevidencia, límites y firma del revisor.']]),
   ('heading','Ejemplo de registro, no evidencia real'),
-  ('code','{\n  "assessment_id": "DEMO-001",\n  "test_id": "T03",\n  "environment": "local-synthetic",\n  "status": "inconclusive",\n  "reason": "simulated timeout",\n  "claim": "No conclusion about security"\n}'),
-  ('p','El manifiesto permite detectar alteraciones respecto a la versión sellada. No acredita que el contenido sea verdadero, que el reloj fuera correcto o que existiera autorización. Esas condiciones requieren registros y revisión adicionales.'),
-  ('callout','SEPARAR DIFUSIÓN Y CONSERVACIÓN','Un expediente privado puede contener detalles que no deben entrar en el documento público. La autorización para probar un sistema no se convierte automáticamente en permiso para divulgar su identidad o sus datos.')]),
- ('06','Plan de trabajo en cuatro etapas',[
-  ('p','La siguiente secuencia es una estimación de planificación, no un método de aprendizaje validado ni una promesa de certificación en cuatro semanas. Cada etapa avanza cuando su salida es revisable; no por cumplir una fecha.'),
-  ('steps',[('Etapa 1 / alcance','Entregar inventario, finalidad, responsables y límites. Salida: el dueño valida qué se evalúa y qué queda fuera.'),('Etapa 2 / amenazas','Entregar escenarios, consecuencias y tratamientos propuestos. Salida: cada riesgo tiene dueño y evidencia esperada.'),('Etapa 3 / contraste normativo','Consultar las ediciones completas con acceso legítimo. Salida: referencias verificadas, aplicabilidad y dudas registradas.'),('Etapa 4 / pruebas y revisión','Ejecutar el plan autorizado en laboratorio. Salida: expediente reproducible, revisión humana y acciones de mejora.')]),
-  ('table',['Estado de una práctica','Qué permite afirmar'],[
+  ('code','{\n  "assessment_id": "DEMO-001",\n  "test_id": "T03",\n  "status": "inconclusive",\n  "reason": "simulated timeout",\n  "claim": "No conclusion about security"\n}'),
+  ('p','Las huellas detectan cambios posteriores; no prueban que el contenido sea cierto ni que hubiera autorización. Eso lo dan los registros de alcance y la revisión.'),
+  ('callout','CONSERVAR NO ES DIFUNDIR','El expediente privado puede tener detalles que no van en el documento público. Permiso para probar un sistema no es permiso para publicar su identidad ni sus datos.')]),
+ ('07','Aplicabilidad y estados',[
+  ('p','La matriz de aplicación junta las fichas anteriores: cada práctica, su objetivo del Anexo A, su dueño, la evidencia esperada y su estado. Es la base de una futura Declaración de Aplicabilidad, no la declaración misma.'),
+  ('table',['Estado','Qué permite afirmar'],[
+   ['Pendiente','Nada todavía sobre implementación o conformidad.'],
    ['Diseñada','La práctica está especificada; no que funcione.'],
    ['Implementada','Existe evidencia de configuración o procedimiento.'],
    ['Probada','Un caso declarado observó el efecto esperado.'],
-   ['Revisada','Una revisión acotada respalda la conclusión.'],
-   ['Pendiente','No hay base para afirmar implementación o conformidad.']]),
-  ('p','Completar templates/matriz_aplicacion.csv sin rellenar por intuición la columna de cláusula. Ninguno de estos estados, por sí solo, equivale a cumplimiento normativo.')]),
- ('07','Revisión antes de publicar',[
-  ('heading','Contenido'),
-  ('steps',[('Afirmaciones','Cada conclusión distingue observado, inferido, propuesto o normativo. No hay porcentajes sin denominador ni resultados inventados.'),('Procedencia','El expediente separa host, guest, navegador e identidad del ejecutor. Incluye fallos y contraevidencia.'),('Información','No aparecen clientes, datos personales, credenciales o capturas ajenas al alcance autorizado de difusión.'),('Normas','No se reproducen documentos ISO. Las referencias por cláusula están verificadas o se declaran pendientes.'),('Estado editorial','Se muestra versión, fecha, límites, asistencia de IA y revisión técnica pendiente cuando corresponda.')]),
-  ('heading','Cierre operativo'),
-  ('p','Detener herramientas y servicios temporales, cerrar pestañas del laboratorio y dejar una nota de continuidad. Conservar los originales y sus huellas. No borrar evidencias que contradigan la conclusión. La reanudación requiere revisar la vigencia del alcance y los cambios de entorno.'),
-  ('callout','CRITERIO FINAL','El lector puede reconstruir qué se autorizó, qué se hizo y qué cambió. Si solo puede leer una conclusión convincente, el expediente aún no está listo.'),
-  ('p','Este manual es un punto de partida para desarrollar prácticas verificables. La validación del protocolo y la revisión completa de las normas son trabajo pendiente de una versión posterior.')]),
- ('08','Fuentes, plantillas y siguientes versiones',[
+   ['Revisada','Una revisión acotada respalda la conclusión.']]),
+  ('heading','Adopción en cuatro etapas'),
+  ('steps',[('Alcance','Inventario, finalidad, responsables y límites, validados por el dueño.'),('Amenazas e impacto','Fichas de riesgo y de impacto con dueño y evidencia esperada.'),('Contraste normativo','Lectura de las ediciones completas: referencias verificadas y dudas registradas.'),('Pruebas y revisión','Plan ejecutado, expediente reproducible y acciones de mejora.')]),
+  ('p','Plantilla: templates/matriz_aplicacion.csv. Ningún estado equivale por sí solo a cumplimiento.')]),
+ ('08','Revisión antes de publicar',[
+  ('steps',[('Afirmaciones','Cada conclusión dice si es observada, inferida, propuesta o normativa. Sin porcentajes sin denominador ni resultados inventados.'),('Procedencia','Se sabe qué entorno, versión e identidad produjo cada resultado. Incluye fallos y contraevidencia.'),('Información','Sin datos de clientes, datos personales, credenciales ni capturas fuera del permiso de difusión.'),('Normas','No se reproduce texto de ISO. Las referencias por cláusula están verificadas o marcadas como pendientes.'),('Estado editorial','Versión, fecha, límites y asistencia de IA visibles.')]),
+  ('callout','CRITERIO FINAL','El lector puede reconstruir qué se autorizó, qué se hizo y qué cambió. Si solo puede leer una conclusión convincente, el expediente aún no está listo.')]),
+ ('09','Fuentes y plantillas',[
   ('sources',None),
-  ('heading','Material editable'),
-  ('p','El repositorio incluye contenido de los documentos, el generador PDF y plantillas CSV. Los ejemplos son sintéticos. No contiene las normas ISO ni información de clientes. Los documentos se publican como documentos de trabajo v0.2 para revisión.'),
-  ('p','Repositorio: github.com/nullghost-io/ai-governance-evidence. Documento complementario: Guía de investigación en gestión y seguridad de IA. La documentación pública de NIST AI RMF [4] es contexto complementario; no se ha completado un cruce normativo.'),
-  ('callout','PRÓXIMA VERSIÓN','Revisión humana del contenido, contraste con textos completos y ejecución del protocolo sintético. Solo después se incorporarán resultados y un mapeo defendible.'),
-  ('p','Elaboración asistida por IA. Revisión técnica humana pendiente. Sin conformidad demostrada.')])
+  ('p','Plantillas CSV, generador y contenido editable en github.com/nullghost-io/ai-governance-evidence. Ejemplos sintéticos; sin normas ISO ni información de clientes. Elaboración asistida por IA, con revisión técnica humana pendiente.')])
  ]}
