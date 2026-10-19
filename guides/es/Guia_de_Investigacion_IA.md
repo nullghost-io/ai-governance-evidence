@@ -2,7 +2,7 @@
 
 Qué pide ISO/IEC 42001, qué cubre ISO/IEC 27090, cómo aprenderlas en cuatro semanas y cómo investigar un sistema de IA con evidencia.
 
-> v0.3 · Versión de trabajo · 19 de octubre de 2026
+> v0.4 · Versión de trabajo · 19 de octubre de 2026
 
 Para equipos pequeños de seguridad y de gobierno de IA. Basada en el alcance público de las normas y en fuentes abiertas; sin certificación ni conformidad demostrada.
 
@@ -145,7 +145,7 @@ La tabla no demuestra que el asistente sea seguro: muestra qué amenazas reduce 
 
 Contrastar todo con las ediciones completas, sustituir las fuentes secundarias por la norma, correr el camino de cuatro semanas con personas reales y publicar los resultados, incluidos los que no funcionen.
 
-> **POLÍTICA DE CAMBIOS.** Cada corrección dice qué afirmación cambia, por qué y con qué fuente. La v0.3 reescribe la v0.2: añade el contenido de las normas y el camino de aprendizaje, y retira un ejemplo que no aportaba al tema.
+> **POLÍTICA DE CAMBIOS.** Cada corrección dice qué afirmación cambia, por qué y con qué fuente. La v0.4 reescribe la v0.2 (la v0.3 solo añadió los videos): añade el contenido de las normas y el camino de aprendizaje, y retira un ejemplo que no aportaba al tema.
 
 ## 10 · Referencias
 

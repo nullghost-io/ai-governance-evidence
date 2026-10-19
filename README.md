@@ -1,6 +1,6 @@
 # Guía de investigación y manual de buenas prácticas de IA
 
-**NullGhost · versión de trabajo v0.3 · 19 de octubre de 2026.**
+**NullGhost · versión de trabajo v0.4 · 19 de octubre de 2026.**
 
 Dos materiales prácticos para estudiar y documentar la gestión y seguridad de IA a partir del alcance público de ISO/IEC 42001:2023 e ISO/IEC 27090:2026. Se publican como guía y manual, con la identidad oficial de NullGhost. Son documentos distintos de la serie de papers académicos de la organización.
 
@@ -11,17 +11,17 @@ Dos materiales prácticos para estudiar y documentar la gestión y seguridad de 
 | Guía de investigación, 11 páginas | [Gestión y seguridad de IA](guides/es/Guia_de_Investigacion_IA.pdf) | [Markdown](guides/es/Guia_de_Investigacion_IA.md) |
 | Manual de buenas prácticas, 10 páginas | [Prácticas de IA](manuals/es/Manual_de_Buenas_Practicas_IA.pdf) | [Markdown](manuals/es/Manual_de_Buenas_Practicas_IA.md) |
 
-[Ver en NullGhost](https://nullghost.io/ia-normas.html) · [Release v0.3](https://github.com/nullghost-io/ai-governance-evidence/releases/tag/v0.3)
+[Ver en NullGhost](https://nullghost.io/ia-normas.html) · [Release v0.4](https://github.com/nullghost-io/ai-governance-evidence/releases/tag/v0.4)
 
 ![Guía de investigación](assets/research-guide-cover.png)
 
 ## Video y publicación web
 
-[Video español](video/iso-ai-es.mp4) · [English video](video/iso-ai-en.mp4). Dos versiones de 30 segundos con la marca oficial. Integrados en Inicio, Investigaciones y la página de las guías; referencias ISO en Servicios. Los videos muestran las portadas de la v0.2; los documentos vigentes son la v0.3.
+[Video español](video/iso-ai-es.mp4) · [English video](video/iso-ai-en.mp4). Dos versiones de 56 segundos, sin audio, con la marca oficial: relación entre las dos normas, cláusulas 4 a 10 y Anexo A de 42001, amenazas de 27090 por fase del ciclo de vida, camino de cuatro semanas, estados de evidencia y portadas v0.4. Todo el texto sale del contenido de la guía. Integrados en Inicio, Investigaciones y la página de las guías; referencias ISO en Servicios. Fuente en `video/` (`build_video.py`).
 
 ## Research guide and good-practice manual
 
-The Spanish PDFs explain what ISO/IEC 42001 requires and what ISO/IEC 27090 covers, propose a four-week learning path, and provide an evidence workflow and practical templates. ES/EN summaries are available on the website. These are working guides and manuals, not entries in NullGhost's academic paper series. Version 0.3 rewrites the content of version 0.2.
+The Spanish PDFs explain what ISO/IEC 42001 requires and what ISO/IEC 27090 covers, propose a four-week learning path, and provide an evidence workflow and practical templates. ES/EN summaries are available on the website. These are working guides and manuals, not entries in NullGhost's academic paper series. Version 0.4 rewrites the content of version 0.2 (version 0.3 only added the videos).
 
 ## Alcance y revisión pendiente
 
@@ -52,7 +52,7 @@ Contenido canónico: `content.py`. `build_premium.py` genera los PDF con el dise
 
 [Historial](CHANGELOG.md) · [Fuentes](sources.json) · [Huellas](SHA256SUMS.txt).
 
-La v0.1 y la v0.2 se conservan solo como historial; la vigente es la v0.3. Utilizar las rutas actuales.
+Las versiones anteriores se conservan solo como historial; la vigente es la v0.4. Utilizar las rutas actuales.
 
 ## Licencias
 

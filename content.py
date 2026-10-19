@@ -1,5 +1,5 @@
 """Contenido original, editable. Guía y manual de trabajo; no es evaluación de conformidad."""
-VERSION = 'v0.3'
+VERSION = 'v0.4'
 DATE_LABEL = '19 OCT 2026'
 
 # Fuentes. Etiquetas: [P] primaria leída directamente; [S] secundaria o ficha no reverificada.
@@ -102,7 +102,7 @@ RESEARCH_GUIDE = {
   ('steps',[('No interpreta las normas','No leímos su texto íntegro. Lo que se dice de ellas es alcance y estructura pública, con fuentes secundarias marcadas.'),('No mide eficacia','El camino de cuatro semanas y el método de evidencia son propuestas sin validar con otros equipos.'),('No certifica','Una guía, un repositorio público y un PDF no acreditan un sistema de gestión implantado.')]),
   ('heading','Qué cambiaría la versión siguiente'),
   ('p','Contrastar todo con las ediciones completas, sustituir las fuentes secundarias por la norma, correr el camino de cuatro semanas con personas reales y publicar los resultados, incluidos los que no funcionen.'),
-  ('callout','POLÍTICA DE CAMBIOS','Cada corrección dice qué afirmación cambia, por qué y con qué fuente. La v0.3 reescribe la v0.2: añade el contenido de las normas y el camino de aprendizaje, y retira un ejemplo que no aportaba al tema.')]),
+  ('callout','POLÍTICA DE CAMBIOS','Cada corrección dice qué afirmación cambia, por qué y con qué fuente. La v0.4 reescribe la v0.2 (la v0.3 solo añadió los videos): añade el contenido de las normas y el camino de aprendizaje, y retira un ejemplo que no aportaba al tema.')]),
  ('10','Referencias',[
   ('sources',None),
   ('p','Consulta de fuentes: 19 de octubre de 2026. Elaboración asistida por IA, con revisión técnica humana pendiente. No se redistribuyen las normas.')])

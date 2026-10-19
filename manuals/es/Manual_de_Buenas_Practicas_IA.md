@@ -2,7 +2,7 @@
 
 Fichas y plantillas para gobernar, proteger y documentar un sistema de IA, una pieza a la vez.
 
-> v0.3 · Versión de trabajo · 19 de octubre de 2026
+> v0.4 · Versión de trabajo · 19 de octubre de 2026
 
 Complemento práctico de la Guía de investigación. Ejemplos sintéticos; sin datos de clientes ni conformidad demostrada.
 

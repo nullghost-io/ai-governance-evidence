@@ -1,6 +1,6 @@
 # Historial
 
-## v0.3 — 2026-10-19
+## v0.4 — 2026-10-19
 
 Reescritura de contenido de la guía y el manual. La guía ahora explica qué pide ISO/IEC 42001 (cláusulas 4 a 10, evaluación de impacto 6.1.4, Anexo A con 9 objetivos y 38 controles según fuentes secundarias), qué cubre ISO/IEC 27090 y su correspondencia aproximada con vocabulario abierto (NIST AI 100-2, OWASP Top 10 para LLM, MITRE ATLAS), un camino de aprendizaje de cuatro semanas con práctica de recuperación y espaciada, el método de evidencia y un caso de práctica. El manual añade la ficha de evaluación de impacto, escenarios de riesgo con amenazas propias de la IA y la relación de cada ficha con los objetivos del Anexo A.
 
@@ -9,6 +9,10 @@ Se retiran el diagrama y el enfoque centrados en un agente con MCP y una máquin
 Diseño: nuevo generador `build_premium.py` con el estilo editorial de NullGhost (portada oscura con el listón de cristal, interiores claros con franja zafiro, Inter). El build falla si algún bloque se sale de su página.
 
 Revisión técnica humana y contraste con el texto íntegro de las normas siguen pendientes.
+
+## v0.3 — 2026-10-19
+
+Videos ES/EN de 30 segundos para acompañar la guía y el manual, e integración en la web. Los documentos se mantuvieron en v0.2.
 
 ## v0.2 — 2026-10-19
 
